@@ -35,64 +35,8 @@ public class Grid : MonoBehaviour
     {
         return;
         string json = Resources.Load<TextAsset>("data").text;
-        GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
-        Hold[][] hold = Newtonsoft.Json.JsonConvert.DeserializeObject<Hold[][]>(gridData.Data.Holds);
-        for (int d = 0; d < hold.Length; d++)
-        {
-            for (int l = 0; l < hold[d].Length; l++)
-            {
-                Debug.Log("TAG DATA");
-                var gameOb = Instantiate(hold[d][l].type == "1"
-                         ? cube01
-                         : hold[d][l].type == "2"
-                             ? cube02
-                             : hold[d][l].type == "3"
-                                 ? cube01
-                                 : hold[d][l].type == "4"
-                                     ? cube04
-                                     : hold[d][l].type == "5"
-                                         ? cube05
-                                         : hold[d][l].type == "6"
-                                             ? cube06
-                                             : hold[d][l].type == "7"
-                                                 ? cube07
-                                                 : hold[d][l].type == "8"
-                                                     ? cube08
-                                                     : hold[d][l].type == "9"
-                                                         ? cube09
-                                                         : hold[d][l].type == "10"
-                                                             ? cube10
-                                                             : hold[d][l].type == "11"
-                                                                 ? cube11
-                                                                 : hold[d][l].type == "12"
-                                                                     ? cube12
-                                                                     : hold[d][l].type == "13"
-                                                                         ? cube13
-                                                                         : hold[d][l].type == "14"
-                                                                             ? cube14
-                                                                             : hold[d][l].type == "15"
-                                                                                 ? cube15
-                                                                                 : hold[d][l].type == "16"
-                                                                                     ? cube16
-                                                                                     : hold[d][l].type == "17"
-                                                                                         ? cube17
-                                                                                         : hold[d][l].type == "18"
-                                                                                             ? cube18
-                                                                                             : hold[d][l].type == "19"
-                                                                                                 ? cube19
-                                                                                                 : hold[d][l].type == "20"
-                                                                                                     ? cube20
-                                                                                                     : hold[d][l].type == "21"
-                                                                                                          ? cube21
-                                                                                                         : cube00,
-                         new Vector3(l, d),
-                         Quaternion.identity);
-                   gameOb.transform 
-                    .Rotate(new Vector3(0, 180, hold[d][l].rotation));
-                lObject.Add(gameOb);
+        RecieveData(json);
 
-            }
-        }
     }
     public void RecieveData(string data)
     {
@@ -134,7 +78,7 @@ public class Grid : MonoBehaviour
                                                                              : hold[d][l].type == "15"
                                                                                  ? cube15
                                                                                  : hold[d][l].type == "16"
-                                                                                     ? cube16
+                                                                                     ? cube16 
                                                                                      : hold[d][l].type == "17"
                                                                                          ? cube17
                                                                                          : hold[d][l].type == "18"
@@ -150,13 +94,15 @@ public class Grid : MonoBehaviour
                          Quaternion.identity);
                 gameOb.transform
                  .Rotate(new Vector3(0, 180, hold[d][l].rotation));
+                gameOb.transform.parent = transform;
                 lObject.Add(gameOb);
             }
         }
-    }
+    }  
     private void Update()
     {
-         
+     if(Utils.rotationAroundYAxis!=0 && Utils.isJoyStick)
+     transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
     }
     public void DestroyView(string data)
     {

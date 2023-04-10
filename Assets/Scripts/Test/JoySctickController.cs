@@ -27,17 +27,18 @@ public class JoySctickController : MonoBehaviour
     }
     void rotate()
     {       
-        if (joyStick.Horizontal == 0) return;
-     //   camera.transform.position = new Vector3(Utils.x, Utils.y);
+        if (joyStick.Horizontal == 0) 
+        {
+            Utils.setJoyStick(false);
+            return;
+        }
         Vector3 direction = Vector3.zero;
         direction.x = joyStick.Horizontal * moveSpeed * Time.deltaTime;
         direction.y = joyStick.Vertical * moveSpeed * Time.deltaTime;
         float rotationAroundYAxis = -direction.x * 180; // camera moves horizontally
         float rotationAroundXAxis = direction.y * 180; // camera moves vertically
-        camera.transform.position = target.position;
-        //cam.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
-        camera.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
-        camera.transform.Translate(new Vector3(5, 15, -distanceToTarget));
+        Utils.setRorationAroundY(rotationAroundYAxis);
+        Utils.setJoyStick(true);
     }
 
     void move()

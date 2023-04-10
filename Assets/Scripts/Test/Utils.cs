@@ -9,6 +9,13 @@ public class Utils {
    public static float y = 15f;
    public static bool isJoyStick = false;
    public static float focalLenght = 50f;
+   public static float rotationAroundYAxis = 0f;
+    
+    public static void setRorationAroundY(float y)
+    {
+        rotationAroundYAxis = y;
+    }
+
     public static void setJoyStick(bool value) {
         isJoyStick = value;
     }
