@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 2446b06252bdfd54495659b8637dab5c
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cube00: {fileID: 919132149155446097, guid: 33ff705d7499b20429f98dd63a5eb2bb, type: 3}
+  - cube01: {fileID: 919132149155446097, guid: 47e18ef3f89868d4fa9838c13e14295e, type: 3}
+  - cube02: {fileID: 919132149155446097, guid: 99df2863917c8db459d4d1701417f5bf, type: 3}
+  - cube03: {fileID: 919132149155446097, guid: c803e6b849798b64c8e205ee281d4578, type: 3}
+  - cube04: {fileID: 919132149155446097, guid: ae3c7a8e70a2c594d900a3f797e6ab76, type: 3}
+  - cube05: {fileID: 919132149155446097, guid: 0e739cd384d9d534298cc5505f10a254, type: 3}
+  - cube06: {fileID: 919132149155446097, guid: b8c0d4e5ff6fae243aefdda9fda77723, type: 3}
+  - cube07: {fileID: 919132149155446097, guid: e4b79a32fbd3fa1439fe0a39563f0b70, type: 3}
+  - cube08: {fileID: 919132149155446097, guid: 0647ed4861a4b3f41ab13d2e392c061a, type: 3}
+  - cube09: {fileID: 919132149155446097, guid: fdcb4671a0c8c90478b15d231fad1e74, type: 3}
+  - cube10: {fileID: 919132149155446097, guid: bedf94b667921e74d9c8859366ca6497, type: 3}
+  - cube11: {fileID: 919132149155446097, guid: bf3cc4e43254ce44fa45b92109b9a920, type: 3}
+  - cube12: {fileID: 919132149155446097, guid: f1ba547d7cba4914d80933df07e7a85b, type: 3}
+  - cube13: {fileID: 919132149155446097, guid: be20dff7e26f60f45b822da46f76dba6, type: 3}
+  - cube14: {fileID: 919132149155446097, guid: cba1830268eb369438b8745a33f5effe, type: 3}
+  - cube15: {fileID: 919132149155446097, guid: f9e3961e672a57242b371238776e6b92, type: 3}
+  - cube16: {fileID: 919132149155446097, guid: f246e04a2b67c674dad4fa6f5bee0cb2, type: 3}
+  - cube17: {fileID: 919132149155446097, guid: 981f328028eda2d43b09a2a5aaf11fb0, type: 3}
+  - cube18: {fileID: 919132149155446097, guid: 74ed15411259af14fa2169881091dc92, type: 3}
+  - cube19: {fileID: 919132149155446097, guid: 0cf1b484081fab04eba4183191bc35a2, type: 3}
+  - cube20: {fileID: 919132149155446097, guid: 7c112029ad3dd4c49a2c0775ae8fec17, type: 3}
+  - cube21: {fileID: 919132149155446097, guid: a7d9b94984ced854ea11666bd69f1716, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
