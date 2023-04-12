@@ -54,5 +54,14 @@ namespace d
         public long AccountId { get; set; }
         public string Gender { get; set; }
         public string Role { get; set; }
-    } 
+    }
+
+    [Serializable]
+    public partial class ThreeDFile
+    {
+        public int id { get; set; }
+        public string filePath { get; set; }
+     // public string FilePath { get; set; }
+    }
+
 }

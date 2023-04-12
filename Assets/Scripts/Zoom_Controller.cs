@@ -7,8 +7,8 @@ public class Zoom_Controller : MonoBehaviour
     [SerializeField] private Camera cam;
 
     float ZoomMinBound = 10f;
-    float ZoomMaxBound = 50f;
-    float TouchZoomSpeed = 0.01f;
+    float ZoomMaxBound = 90f;
+    float TouchZoomSpeed = 0.02f;
     private void Start()
     {
     }
