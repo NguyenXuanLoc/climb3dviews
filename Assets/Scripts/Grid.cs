@@ -3,11 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using d;
 using Dummiesman;
-using System.Text;
-using UnityEngine.Networking;
 using System;
-using System.Collections;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public class Grid : MonoBehaviour
 {
@@ -36,13 +32,40 @@ public class Grid : MonoBehaviour
     [SerializeField] public Camera camera;
 
     public List<GameObject> lObject = new List<GameObject>();
-
+    public Dictionary<String, GameObject> mCacheObject = new Dictionary<string, GameObject>();
     private void Start()
     {
+        // convertStringToObj("C:/Users/Admin/Desktop/7540ff60-dffc-11ed-ae64-7786bddc551f.dabab");
         return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);
 
+    }
+    void convertStringToObj(String threeDModel)
+    {
+        //  string path = Application.persistentDataPath + "/model.dabab";
+        //  string path = threeDModel.filePath;
+          string path = threeDModel; 
+        Debug.Log("OPEN FILE" + path);
+        if (File.Exists(path))
+        { 
+         GameObject model = OpenMesh.StrToModel(File.ReadAllText(path), "mo|");
+            SendMessage("READ_FILE", File.ReadAllBytes(path)); 
+         Debug.Log("TAG File.ReadAllText(path): " + File.ReadAllText(path));
+            var gameObject = Instantiate(model);
+            gameObject.transform
+                .Rotate(new Vector3(0, 180, 0));
+  /*          gameObject.transform.position = new Vector3(5, 15, -20);
+            gameObject.transform.localScale =new Vector3(10,10,10);*/
+            //  Destroy(model);  
+            mCacheObject.Add("0", gameObject);
+            gameObject.SetActive(true);
+            Debug.Log("TAG CONVERT SUCCESS: SHOW UI");
+        }
+        else
+        {
+            Debug.Log("TAG file is EMPTY");
+        }
     }
     public void RecieveData(string data)
     {
@@ -50,12 +73,12 @@ public class Grid : MonoBehaviour
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
         Hold[][] hold = Newtonsoft.Json.JsonConvert.DeserializeObject<Hold[][]>(gridData.Data.Holds);
         for (int d = 0; d < hold.Length; d++)
-        {
+        { 
             for (int l = 0; l < hold[d].Length; l++)
             {
-                var gameOb = Instantiate(hold[d][l].type == "Empty" ? cube01 : mCacheObject[hold[d][l].type], new Vector3(l, d),
+                var gameOb = Instantiate(hold[d][l].type == "Empty" ? cube01 : mCacheObject["0"/*hold[d][l].type*/], new Vector3(l, d),
                          Quaternion.identity);
-                /*var gameOb = Instantiate(hold[d][l].type == "1"
+             /*   var gameOb = Instantiate(hold[d][l].type == "1"
                          ? cube01
                          : hold[d][l].type == "2"
                              ? cube02
@@ -86,7 +109,7 @@ public class Grid : MonoBehaviour
                                                                              : hold[d][l].type == "15"
                                                                                  ? cube15
                                                                                  : hold[d][l].type == "16"
-                                                                                     ? cube16 
+                                                                                     ? cube16
                                                                                      : hold[d][l].type == "17"
                                                                                          ? cube17
                                                                                          : hold[d][l].type == "18"
@@ -97,12 +120,12 @@ public class Grid : MonoBehaviour
                                                                                                      ? cube20
                                                                                                      : hold[d][l].type == "21"
                                                                                                           ? cube21
-                                                                                                        :  hold[d][l].type == "22"
+                                                                                                        : hold[d][l].type == "22"
                                                                                                           ? cube22
                                                                                                          : cube01,
                          new Vector3(l, d),
                          Quaternion.identity);
-                gameOb.transform
+             */   gameOb.transform
                  .Rotate(new Vector3(0, 180, hold[d][l].rotation));
                 gameOb.transform.parent = transform;
                 lObject.Add(gameOb);
@@ -111,8 +134,8 @@ public class Grid : MonoBehaviour
     }
     private void Update()
     {
-         if(Utils.rotationAroundYAxis!=0 && Utils.isJoyStick)
-         transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
+        if (Utils.rotationAroundYAxis != 0 && Utils.isJoyStick)
+            transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
     }
     public void DestroyView(string data)
     {
@@ -129,96 +152,16 @@ public class Grid : MonoBehaviour
         ThreeDFile[] lFile = Newtonsoft.Json.JsonConvert.DeserializeObject<ThreeDFile[]>(data);
         for (int i = 0; i < lFile.Length; i++)
         {
-         //   loadGameObjectByPath1(lFile[i]);
-        }
-        Debug.Log("TAG mCacheObject.Count: " + mCacheObject.Count);
+          //  convertStringToObj(lFile[0]);
+            //   loadGameObjectByPath1(lFile[i]);
+        } 
+        convertStringToObj(lFile[0].filePath);
+        // convertStringToObj(lFile[0]);
+        //     Debug.Log("TAG mCacheObject.Count: " + mCacheObject.Count);
     }
-
-    public void loadGameObjectByPath(ThreeDFile model)
-    {
-
-        if (File.Exists(model.filePath))
-        {
-            var path = new Uri("file:///C:/whatever.txt");
-
-            Debug.Log("TAG FILE EXISTS, Start convert TO MODEL: " + model.filePath);
-            try
-            {
-                string fullPath = Path.Combine(Application.temporaryCachePath, "as");
-                Debug.Log("TAG PATH TEST: " + fullPath);
-                string fileContents = File.ReadAllText(model.filePath);
-                GameObject loadedObject = Resources.Load<GameObject>(fileContents);
-
-
-                var gameObject = new OBJLoader().Load(model.filePath);
-                if (gameObject != null)
-                    Debug.Log("TAG GAME OBJECT != NULL => SUCCEESS");
-                else Debug.Log("TAG GAME OBJECT NULL");
-                mCacheObject.Add(model.id.ToString(), gameObject);
-            }
-            catch (Exception e)
-            {
-                Debug.Log("TAG EXCEPTION: %%: " + e.Message);
-            }
-        }
-        else
-        {
-            Debug.LogError("File not found: " + model.filePath);
-        }
-    }
-
-    public void loadGameObjectByPath1(String filePath)
-    {
-        if (File.Exists(filePath))
-        {
-            Obj_importer objImporter = new Obj_importer();
-            Mesh mesh = objImporter.ImportFile(filePath);
-            GameObject obj = new GameObject();
-            obj.AddComponent<MeshFilter>().mesh = mesh;
-            obj.AddComponent<MeshRenderer>().material = new Material(Shader.Find("Standard"));
-            Instantiate(obj);
-        }
-        else
-        {
-            Debug.LogError("File not found: " +filePath);
-        }
-}
-
     public void SetInfoRoute(string data)
     {
         RecieveData(data);
     }
-
-    IEnumerator startDownload()
-    {
-        // Start a download of the given URL
-        WWW www = WWW.LoadFromCacheOrDownload("file:///C:/Users/Admin/Desktop/cb346750-dcf9-11ed-bacc-59dd560a60f9.obj", 1);
-
-        // Wait for download to complete
-        yield return www;
-
-        // Load and retrieve the AssetBundle
-        AssetBundle bundle = www.assetBundle;
-
-        // Load the object asynchronously
-        AssetBundleRequest request = bundle.LoadAssetAsync("myObject", typeof(GameObject));
-
-        // Wait for completion
-        yield return request;
-
-        // Get the reference to the loaded object
-        GameObject obj = request.asset as GameObject;
-        Instantiate(obj);
-        Debug.Log("TAG Instantiate");
-        // Unload the AssetBundles compressed contents to conserve memory
-        bundle.Unload(false);
-
-        // Frees the memory from the web stream
-        www.Dispose();
-    }
 }
-[System.Serializable]
-class UserDraw
-{
-    public GameObject drawing;
-}
+
