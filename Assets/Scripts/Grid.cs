@@ -1,12 +1,7 @@
 using UnityEngine;
-using System.IO;
 using System.Collections.Generic;
 using d;
-using System.Text;
-using UnityEngine.Networking;
-using System;
-using System.Collections; 
-using System.Runtime.Serialization.Formatters.Binary;
+
 
 public class Grid : MonoBehaviour 
 {
@@ -37,7 +32,8 @@ public class Grid : MonoBehaviour
     public List<GameObject> lObject = new List<GameObject>();
 
     private void Start()
-    {
+    { 
+        Utils.setFieldOfView(camera.fieldOfView);
         return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);
@@ -108,13 +104,26 @@ public class Grid : MonoBehaviour
         }
     }
     private void Update()
-    {
-         if(Utils.rotationAroundYAxis!=0 && Utils.isJoyStick)
+    {  
+        if (Utils.isResetGrid) refreshUI();     
+         if(Utils.rotationAroundYAxis != 0 && Utils.isJoyStick)
          transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
+    }
+      
+    void refreshUI()   
+    {
+        camera.fieldOfView = Utils.fieldOfView;
+        Utils.setRorationAroundY(0); 
+        Utils.setX(5f);
+        Utils.setY(15f); 
+        Vector3 move = new Vector3(Utils.x,Utils.y, -30);
+        camera.transform.position = move;
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
     public void DestroyView(string data)
     {
         Debug.Log("TAG DESTREOY VIEW");
+        refreshUI();
         foreach (GameObject ob in lObject)
         {
             Destroy(ob);

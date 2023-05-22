@@ -10,7 +10,16 @@ public class Utils {
    public static bool isJoyStick = false;
    public static float focalLenght = 50f;
    public static float rotationAroundYAxis = 0f;
+   public static float fieldOfView = 0f;
+    public static bool isResetGrid = false;
+   
+
     
+    public static void setFieldOfView(float value) //rollback to start position when open 3d view
+    {
+       fieldOfView = value;
+    }
+
     public static void setRorationAroundY(float y)
     {
         rotationAroundYAxis = y;
@@ -23,6 +32,12 @@ public class Utils {
     {
         focalLenght = value;
     }
+
+    public static void setRefreshUi(bool value)
+    {
+        isResetGrid = value;
+    }
+
     public static void setRotate(bool value)
     {
         isRotate = value;
