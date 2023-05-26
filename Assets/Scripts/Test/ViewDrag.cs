@@ -10,7 +10,8 @@ public class ViewDrag : MonoBehaviour
     float z = 0.0f;
     // Start is called before the first frame update
   void Update(){
-    if(Input.GetMouseButtonDown(0)){
+        if (Utils.isJoyStick || Utils.isRotate || Input.touchCount==2 || Utils.isTwoTouch) return;
+    if(Input.GetMouseButtonDown(0) ){ 
         hit_position = Input.mousePosition;
         camera_position = transform.position;
 
@@ -21,7 +22,7 @@ public class ViewDrag : MonoBehaviour
     }
 }
 
-void LeftMouseDrag(){
+void LeftMouseDrag(){ 
     // From the Unity3D docs: "The z position is in world units from the camera."  In my case I'm using the y-axis as height
     // with my camera facing back down the y-axis.  You can ignore this when the camera is orthograhic.
     current_position.z = hit_position.z = camera_position.y;
@@ -36,5 +37,7 @@ void LeftMouseDrag(){
     Vector3 position = camera_position + direction;
 
     transform.position = position;
-}
+     Utils.setX(position.x);
+     Utils.setY(position.y);
+    }
 }

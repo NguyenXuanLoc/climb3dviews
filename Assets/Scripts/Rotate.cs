@@ -11,6 +11,7 @@ public class Rotate : MonoBehaviour, IDragHandler
     [SerializeField] private float maxSize = 197;
     [SerializeField] private float minSize = 50;
     float currentIncrement = 0;
+    private Vector3 previousPosition;
 
 
     private void Update()
@@ -27,6 +28,32 @@ public class Rotate : MonoBehaviour, IDragHandler
             zoom(difference);
 
         }
+          else  if (Input.GetMouseButtonDown(0))
+         {
+                 previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
+           }
+            else if (Input.GetMouseButton(0))
+              {
+            rotate();
+          }
+    }
+    void rotate()
+    {
+        if (!Utils.isRotate || Utils.isJoyStick) return;
+        Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);
+        Vector3 direction = previousPosition - newPosition;
+
+        float rotationAroundYAxis = -direction.x * 180; // camera moves horizontally
+        float rotationAroundXAxis = direction.y * 180; // camera moves vertically
+        cam.transform.position = target.position;
+        cam.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
+        cam.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
+        Debug.Log("TAG Utils.x: " + Utils.x + " Utils.y: " + Utils.y);
+        Debug.Log("TAG target.position: " + target.position.x + "target.position: " + target.position.y);
+
+        //cam.transform.Translate(new Vector3(Utils.x, Utils.y, -distanceToTarget));
+        cam.transform.Translate(new Vector3(5, 15, -distanceToTarget));
+        previousPosition = newPosition;
     }
     void zoom(float increment)
         {

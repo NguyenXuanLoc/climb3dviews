@@ -30,7 +30,7 @@ public class Grid : MonoBehaviour
     [SerializeField] public Camera camera;
 
     public List<GameObject> lObject = new List<GameObject>();
-
+    float currentRotationAroundYAxis;
     private void Start()
     { 
         Utils.setFieldOfView(camera.fieldOfView);
@@ -47,7 +47,7 @@ public class Grid : MonoBehaviour
         for (int d = 0; d < hold.Length; d++)
         {
             for (int l = 0; l < hold[d].Length; l++)
-            {
+            { 
      
                 var gameOb = Instantiate(hold[d][l].type == "1"
                          ? cube01
@@ -80,10 +80,10 @@ public class Grid : MonoBehaviour
                                                                              : hold[d][l].type == "15"
                                                                                  ? cube15
                                                                                  : hold[d][l].type == "16"
-                                                                                     ? cube16 
+                                                                                     ? cube16
                                                                                      : hold[d][l].type == "17"
                                                                                          ? cube17
-                                                                                         : hold[d][l].type == "18" 
+                                                                                         : hold[d][l].type == "18"
                                                                                              ? cube18
                                                                                              : hold[d][l].type == "19"
                                                                                                  ? cube19
@@ -91,9 +91,9 @@ public class Grid : MonoBehaviour
                                                                                                      ? cube20
                                                                                                      : hold[d][l].type == "21"
                                                                                                           ? cube21
-                                                                                                        :  hold[d][l].type == "22"
+                                                                                                        : hold[d][l].type == "22"
                                                                                                           ? cube22
-                                                                                                         : cube01,
+                                                                                                         : cube01, 
                          new Vector3(l, d),
                          Quaternion.identity);
                 gameOb.transform
@@ -104,11 +104,15 @@ public class Grid : MonoBehaviour
         }
     }
     private void Update()
-    {  
+    {
         if (Utils.isResetGrid) refreshUI();     
-         if(Utils.rotationAroundYAxis != 0 && Utils.isJoyStick)
-         transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
+         if(Utils.rotationAroundYAxis != 0 && currentRotationAroundYAxis!=Utils.rotationAroundYAxis && Input.touchCount == 2)
+        {
+            transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
+            currentRotationAroundYAxis = Utils.rotationAroundYAxis;
+        }
     }
+
       
     void refreshUI()   
     {

@@ -11,10 +11,15 @@ public class Utils {
    public static float focalLenght = 50f;
    public static float rotationAroundYAxis = 0f;
    public static float fieldOfView = 0f;
-    public static bool isResetGrid = false;
-   
+   public static bool isResetGrid = false;
+   public static bool isTwoTouch;
 
     
+    public static void setTwoTouch(bool value)
+    {
+        isTwoTouch = value;
+    }
+
     public static void setFieldOfView(float value) //rollback to start position when open 3d view
     {
        fieldOfView = value;

@@ -18,12 +18,15 @@ public class Zoom_Controller : MonoBehaviour
         {
             Touch touchZero = Input.GetTouch(0);
             Touch touchOne = Input.GetTouch(1);
-            Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-            Vector2 touchOnePrePos = touchOne.position - touchOne.deltaPosition;
-            float preMagnitude = (touchZeroPrevPos - touchOnePrePos).magnitude;
-            float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
-            float difference =  preMagnitude - currentMagnitude;
-            Zoom(difference, TouchZoomSpeed);
+            if(touchZero.phase == TouchPhase.Moved && touchOne.phase == TouchPhase.Moved)
+            {
+                Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
+                Vector2 touchOnePrePos = touchOne.position - touchOne.deltaPosition;
+                float preMagnitude = (touchZeroPrevPos - touchOnePrePos).magnitude;
+                float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+                float difference = preMagnitude - currentMagnitude;
+                Zoom(difference, TouchZoomSpeed);
+            } 
 
         }
     }
@@ -32,5 +35,6 @@ public class Zoom_Controller : MonoBehaviour
         cam.fieldOfView += deltaMagnitudeDiff * speed;
         // set min and max value of Clamp function upon your requirement
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, ZoomMinBound, ZoomMaxBound);
+   //     Debug.Log("TAG VALUE: " + 5.292 / (cam.fieldOfView));
     }
 }
