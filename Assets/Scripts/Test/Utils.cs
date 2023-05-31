@@ -13,8 +13,14 @@ public class Utils {
    public static float fieldOfView = 0f;
    public static bool isResetGrid = false;
    public static bool isTwoTouch;
-
+   public static int heightOfWall = 0;
     
+
+    public static void setHeightOfWall(int value)
+    {
+        heightOfWall = value;
+    }
+
     public static void setTwoTouch(bool value)
     {
         isTwoTouch = value;

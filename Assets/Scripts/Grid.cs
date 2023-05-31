@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using d;
-
+using System.Threading.Tasks;
 
 public class Grid : MonoBehaviour 
 {
@@ -43,6 +43,7 @@ public class Grid : MonoBehaviour
     {
         string json = data;
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
+        Utils.setHeightOfWall(int.Parse(gridData.Data.Height.ToString()));
         Hold[][] hold = Newtonsoft.Json.JsonConvert.DeserializeObject<Hold[][]>(gridData.Data.Holds);
         for (int d = 0; d < hold.Length; d++)
         {
@@ -119,11 +120,16 @@ public class Grid : MonoBehaviour
         camera.fieldOfView = Utils.fieldOfView;
         Utils.setRorationAroundY(0); 
         Utils.setX(5f);
-        Utils.setY(15f); 
+        Utils.setY(15f);
+        /*Utils.setHeightOfWall(0);*/
         Vector3 move = new Vector3(Utils.x,Utils.y, -30);
         camera.transform.position = move;
+        Vector3 moveGrid = new Vector3(5, 1.43f, 0);
+        transform.position = moveGrid;
+        /*transform.Rotate(new Vector3(0, 1, 0), 0, Space.World);*/
         transform.localRotation = Quaternion.Euler(0, 0, 0);
     }
+
     public void DestroyView(string data)
     {
         Debug.Log("TAG DESTREOY VIEW");
