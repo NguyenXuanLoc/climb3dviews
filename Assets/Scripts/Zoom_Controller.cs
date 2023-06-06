@@ -36,7 +36,7 @@ public class Zoom_Controller : MonoBehaviour
         cam.fieldOfView += deltaMagnitudeDiff * speed;
         // set min and max value of Clamp function upon your requirement 
         cam.fieldOfView = Mathf.Clamp(cam.fieldOfView, ZoomMinBound, ZoomMaxBound);
-      //  if (cam.fieldOfView == minScale) cam.fieldOfView = minScale;
+        if (cam.focalLength <= 50) cam.focalLength = 50;
    //     Debug.Log("TAG VALUE: " + 5.292 / (cam.fieldOfView));
     }
 }
