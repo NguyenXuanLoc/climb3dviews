@@ -10,7 +10,7 @@ public class JoySctickController : MonoBehaviour
     public Camera camera;
     [SerializeField] private Transform target;
     private Vector3 _moveVector;
-    [SerializeField]
+    [SerializeField] 
     public float moveSpeed =20f;
     [SerializeField] private float distanceToTarget = 10;
 
@@ -39,19 +39,5 @@ public class JoySctickController : MonoBehaviour
         float rotationAroundXAxis = direction.y * 180; // camera moves vertically
         Utils.setRorationAroundY(rotationAroundYAxis);
         Utils.setJoyStick(true);
-    }
-
-    void move()
-    { 
-        _moveVector = Vector3.zero;
-        _moveVector.x = joyStick.Horizontal * moveSpeed * Time.deltaTime;
-        _moveVector.y = joyStick.Vertical * moveSpeed * Time.deltaTime;
-        Utils.setJoyStick(joyStick.Vertical != 0 || joyStick.Horizontal != 0);
-        if(joyStick.Horizontal !=0 || joyStick.Vertical != 0)
-        {
-            camera.transform.Translate(_moveVector, Space.World);
-            Utils.setX(camera.transform.position.x);
-            Utils.setY(camera.transform.position.y);
-        }
     }
 }

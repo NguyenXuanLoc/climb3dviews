@@ -11,12 +11,9 @@ public class Rotate : MonoBehaviour, IDragHandler
     [SerializeField] private float maxSize = 197;
     [SerializeField] private float minSize = 50;
     float currentIncrement = 0;
-    private bool isZoomed = false;
     private Vector3 previousPosition;
-    private void Start()
-    {
-    // Debug.Log("cam.transform.position.z: " + cam.transform.position.z);
-    }
+
+
     private void Update()
     {
         if (Input.touchCount == 2)
@@ -31,25 +28,18 @@ public class Rotate : MonoBehaviour, IDragHandler
             zoom(difference);
 
         }
-     //   else  if (Input.GetMouseButtonDown(0))
-      //  {
-   //         previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
-     //   }
-    //    else if (Input.GetMouseButton(0))
-  //      {
-       //    rotate();
-                
-    //  }
+          else  if (Input.GetMouseButtonDown(0))
+         {
+                 previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
+           }
+            else if (Input.GetMouseButton(0))
+              {
+            rotate();
+          }
     }
     void rotate()
     {
-        if (isZoomed)
-        {
-            isZoomed = false;
-            return;
-        }
-        
-        if (!Utils.isRotate||Utils.isJoyStick) return;
+        if (!Utils.isRotate || Utils.isJoyStick) return;
         Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);
         Vector3 direction = previousPosition - newPosition;
 
@@ -58,12 +48,12 @@ public class Rotate : MonoBehaviour, IDragHandler
         cam.transform.position = target.position;
         cam.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
         cam.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
-        Debug.Log("TAG Utils.x: "+ Utils.x+ " Utils.y: "+ Utils.y);
+        Debug.Log("TAG Utils.x: " + Utils.x + " Utils.y: " + Utils.y);
         Debug.Log("TAG target.position: " + target.position.x + "target.position: " + target.position.y);
 
-      //cam.transform.Translate(new Vector3(Utils.x, Utils.y, -distanceToTarget));
+        //cam.transform.Translate(new Vector3(Utils.x, Utils.y, -distanceToTarget));
         cam.transform.Translate(new Vector3(5, 15, -distanceToTarget));
-        previousPosition = newPosition;  
+        previousPosition = newPosition;
     }
     void zoom(float increment)
         {
@@ -81,7 +71,6 @@ public class Rotate : MonoBehaviour, IDragHandler
         Utils.setFocalLenght(cam.focalLength);
         Utils.setX(cam.transform.position.x);
         Utils.setY(cam.transform.position.y);
-        isZoomed = true;
         // cam.focalLength = 100;
         // cam.orthographicSize
         // cam.orthographicSize = Mathf.Clamp(cam.orthographicSize - increment, 30, 60);

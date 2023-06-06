@@ -1,12 +1,7 @@
 using UnityEngine;
-using System.IO;
 using System.Collections.Generic;
 using d;
-using System.Text;
-using UnityEngine.Networking;
-using System;
-using System.Collections; 
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 
 public class Grid : MonoBehaviour 
 {
@@ -35,9 +30,10 @@ public class Grid : MonoBehaviour
     [SerializeField] public Camera camera;
 
     public List<GameObject> lObject = new List<GameObject>();
-
+    float currentRotationAroundYAxis;
     private void Start()
-    {
+    { 
+        Utils.setFieldOfView(camera.fieldOfView);
         return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);
@@ -47,11 +43,12 @@ public class Grid : MonoBehaviour
     {
         string json = data;
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
+        Utils.setHeightOfWall(int.Parse(gridData.Data.Height.ToString()));
         Hold[][] hold = Newtonsoft.Json.JsonConvert.DeserializeObject<Hold[][]>(gridData.Data.Holds);
         for (int d = 0; d < hold.Length; d++)
         {
             for (int l = 0; l < hold[d].Length; l++)
-            {
+            { 
      
                 var gameOb = Instantiate(hold[d][l].type == "1"
                          ? cube01
@@ -84,10 +81,10 @@ public class Grid : MonoBehaviour
                                                                              : hold[d][l].type == "15"
                                                                                  ? cube15
                                                                                  : hold[d][l].type == "16"
-                                                                                     ? cube16 
+                                                                                     ? cube16
                                                                                      : hold[d][l].type == "17"
                                                                                          ? cube17
-                                                                                         : hold[d][l].type == "18" 
+                                                                                         : hold[d][l].type == "18"
                                                                                              ? cube18
                                                                                              : hold[d][l].type == "19"
                                                                                                  ? cube19
@@ -95,9 +92,9 @@ public class Grid : MonoBehaviour
                                                                                                      ? cube20
                                                                                                      : hold[d][l].type == "21"
                                                                                                           ? cube21
-                                                                                                        :  hold[d][l].type == "22"
+                                                                                                        : hold[d][l].type == "22"
                                                                                                           ? cube22
-                                                                                                         : cube01,
+                                                                                                         : cube01, 
                          new Vector3(l, d),
                          Quaternion.identity);
                 gameOb.transform
@@ -109,12 +106,34 @@ public class Grid : MonoBehaviour
     }
     private void Update()
     {
-         if(Utils.rotationAroundYAxis!=0 && Utils.isJoyStick)
-         transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
+        if (Utils.isResetGrid) refreshUI();     
+         if(Utils.rotationAroundYAxis != 0 && currentRotationAroundYAxis!=Utils.rotationAroundYAxis && Input.touchCount == 2)
+        {
+            transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
+            currentRotationAroundYAxis = Utils.rotationAroundYAxis;
+        }
     }
+
+      
+    void refreshUI()   
+    {
+        camera.fieldOfView = Utils.fieldOfView;
+        Utils.setRorationAroundY(0); 
+        Utils.setX(5f);
+        Utils.setY(15f);
+        /*Utils.setHeightOfWall(0);*/
+        Vector3 move = new Vector3(Utils.x,Utils.y, -30);
+        camera.transform.position = move;
+        Vector3 moveGrid = new Vector3(5, 1.43f, 0);
+        transform.position = moveGrid;
+        /*transform.Rotate(new Vector3(0, 1, 0), 0, Space.World);*/
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
     public void DestroyView(string data)
     {
         Debug.Log("TAG DESTREOY VIEW");
+        refreshUI();
         foreach (GameObject ob in lObject)
         {
             Destroy(ob);
