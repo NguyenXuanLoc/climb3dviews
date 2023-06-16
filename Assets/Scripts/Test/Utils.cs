@@ -10,6 +10,7 @@ public class Utils {
    public static bool isJoyStick = false;
    public static float focalLenght = 50f;
    public static float rotationAroundYAxis = 0f;
+    public static float rotationAroundXAxis = 0;
    public static float fieldOfView = 0f;
    public static bool isResetGrid = false;
    public static bool isTwoTouch;
@@ -31,8 +32,9 @@ public class Utils {
        fieldOfView = value;
     }
 
-    public static void setRorationAroundY(float y)
+    public static void setRorationAroundXY(float x,float y)
     {
+        rotationAroundXAxis = x;
         rotationAroundYAxis = y;
     }
 

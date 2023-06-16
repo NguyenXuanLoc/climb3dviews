@@ -44,6 +44,7 @@ public class Grid : MonoBehaviour
         string json = data;
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
         Utils.setHeightOfWall(int.Parse(gridData.Data.Height.ToString()));
+        setFocusPosition(int.Parse(gridData.Data.Height.ToString()));
         Hold[][] hold = Newtonsoft.Json.JsonConvert.DeserializeObject<Hold[][]>(gridData.Data.Holds);
         for (int d = 0; d < hold.Length; d++)
         {
@@ -106,6 +107,7 @@ public class Grid : MonoBehaviour
     }
     private void Update()
     {
+
         if (Utils.isResetGrid) refreshUI();     
          if(Utils.rotationAroundYAxis != 0 && currentRotationAroundYAxis!=Utils.rotationAroundYAxis && Input.touchCount == 2)
         {
@@ -114,11 +116,11 @@ public class Grid : MonoBehaviour
         }
     }
 
-      
+
     void refreshUI()   
     {
         camera.fieldOfView = Utils.fieldOfView;
-        Utils.setRorationAroundY(0); 
+        Utils.setRorationAroundXY(0,0); 
         Utils.setX(5f);
         Utils.setY(15f);
         /*Utils.setHeightOfWall(0);*/
@@ -128,6 +130,27 @@ public class Grid : MonoBehaviour
         transform.position = moveGrid;
         /*transform.Rotate(new Vector3(0, 1, 0), 0, Space.World);*/
         transform.localRotation = Quaternion.Euler(0, 0, 0);
+    }
+
+    void setFocusPosition(int height)
+    {
+        int value = 0;
+        switch (height)
+        {
+            case 3:
+                value = 7;
+                break;      
+            case 6:
+                value = 14;
+                break;
+            case 9:
+                value = 21;
+                break;
+            case 12:
+                value = 28;
+                break;
+        }
+        transform.position = new Vector3(5, value, 0);
     }
 
     public void DestroyView(string data)

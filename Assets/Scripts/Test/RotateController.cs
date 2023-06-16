@@ -19,10 +19,10 @@ public class RotateController : MonoBehaviour
             Touch touch2 = Input.GetTouch(1);
         if ((touch1.phase == TouchPhase.Moved && !(touch2.phase == TouchPhase.Moved)))
             { 
-                Utils.setRorationAroundY(touch1.deltaPosition.y);
+                Utils.setRorationAroundXY(touch1.deltaPosition.x,touch1.deltaPosition.y);
             }else if ( (touch2.phase == TouchPhase.Moved && !(touch1.phase == TouchPhase.Moved)))
             {
-                Utils.setRorationAroundY(touch2.deltaPosition.y);
+                Utils.setRorationAroundXY(touch1.deltaPosition.x ,touch2.deltaPosition.y);
             }
         }
         else
