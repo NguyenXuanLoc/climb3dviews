@@ -34,14 +34,14 @@ public class Grid : MonoBehaviour
     private void Start()
     { 
         Utils.setFieldOfView(camera.fieldOfView);
-        return;
+        /*return;*/
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);
 
     }
     public void RecieveData(string data)
     {
-        string json = data;
+        string json = data; 
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
         Utils.setHeightOfWall(int.Parse(gridData.Data.Height.ToString()));
         setFocusPosition(int.Parse(gridData.Data.Height.ToString()));
