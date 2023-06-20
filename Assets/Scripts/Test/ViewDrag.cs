@@ -30,7 +30,7 @@ public class ViewDrag : MonoBehaviour
         if (Utils.isJoyStick) return;
         transform.position = MouseWorldPosition() + offset;
         var focalLength = camera.focalLength;
-        Debug.Log("Utils.heightOfWall: " + Utils.heightOfWall);
+      /*  Debug.Log("Utils.heightOfWall: " + Utils.heightOfWall);
         switch (Utils.heightOfWall)
         {
             case 3:
@@ -49,7 +49,7 @@ public class ViewDrag : MonoBehaviour
                 limitHorizental12m(focalLength);
                 limitVertical12m(focalLength);
                 break;
-        }
+        }*/
 
     }
 

@@ -37,7 +37,7 @@ public class JoySctickController : MonoBehaviour
         direction.y = joyStick.Vertical * moveSpeed * Time.deltaTime;
         float rotationAroundYAxis = -direction.x * 180; // camera moves horizontally
         float rotationAroundXAxis = direction.y * 180; // camera moves vertically
-        Utils.setRorationAroundY(rotationAroundYAxis);
+    //    Utils.setRorationAroundY(rotationAroundYAxis);
         Utils.setJoyStick(true);
     }
 }
