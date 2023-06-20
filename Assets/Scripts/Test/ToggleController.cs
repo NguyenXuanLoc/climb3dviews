@@ -17,7 +17,7 @@ public class ToggleController : MonoBehaviour
     }
     void ToggleValueChangedOccured(Toggle tglValue)
     {
-        Debug.Log("TAG VALUE CHANEG: : " + tglValue.isOn);
+   
         Utils.setRefreshUi(tglValue.isOn);
         //  if(tglValue.isOn == true) camera.transform.Translate(new Vector3(0, 0 ,0));
     }
