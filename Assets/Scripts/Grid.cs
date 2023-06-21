@@ -31,6 +31,8 @@ public class Grid : MonoBehaviour
 
     public List<GameObject> lObject = new List<GameObject>();
     float currentRotationAroundYAxis;
+
+    int positionY = 0;
     private void Start()
     { 
         Utils.setFieldOfView(camera.fieldOfView);
@@ -126,7 +128,7 @@ public class Grid : MonoBehaviour
         /*Utils.setHeightOfWall(0);*/
         Vector3 move = new Vector3(Utils.x,Utils.y, -30);
         camera.transform.position = move;
-        Vector3 moveGrid = new Vector3(5, 1.43f, 0);
+        Vector3 moveGrid = new Vector3(5,positionY, 0);
         transform.position = moveGrid;
         /*transform.Rotate(new Vector3(0, 1, 0), 0, Space.World);*/
         transform.localRotation = Quaternion.Euler(0, 0, 0);
@@ -150,6 +152,7 @@ public class Grid : MonoBehaviour
                 value = 28;
                 break;
         }
+        positionY = value;
         transform.position = new Vector3(5, value, 0);
     }
 
