@@ -36,7 +36,7 @@ public class Grid : MonoBehaviour
     private void Start()
     { 
         Utils.setFieldOfView(camera.fieldOfView);
-        /*return;*/
+        return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);
 
