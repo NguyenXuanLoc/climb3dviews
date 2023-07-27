@@ -36,9 +36,9 @@ public class Grid : MonoBehaviour
     private void Start()
     { 
         Utils.setFieldOfView(camera.fieldOfView);
-        return;
+        /*return;*/
         string json = Resources.Load<TextAsset>("data").text;
-        RecieveData(json);
+        RecieveData(json); 
 
     }
     public void RecieveData(string data)
@@ -112,11 +112,11 @@ public class Grid : MonoBehaviour
 
         if (Utils.isResetGrid) refreshUI();     
          if(Utils.rotationAroundYAxis != 0 && currentRotationAroundYAxis!=Utils.rotationAroundYAxis && Input.touchCount == 2)
-        {
-            transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
+        { 
+        //    transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
             currentRotationAroundYAxis = Utils.rotationAroundYAxis;
         }
-    }
+    } 
 
 
     void refreshUI()   

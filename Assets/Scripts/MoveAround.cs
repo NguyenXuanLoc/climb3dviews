@@ -27,8 +27,8 @@ public class MoveAround : MonoBehaviour
             Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);
             Vector3 direction = previousPosition - newPosition;
 
-            float rotationAroundYAxis = -direction.x * 180; // camera moves horizontally
-            float rotationAroundXAxis = direction.y * 180; // camera moves vertically
+            float rotationAroundYAxis = direction.x * 180; // camera moves horizontally
+            float rotationAroundXAxis = -direction.y * 180; // camera moves vertically
             target.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
             target.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
             previousPosition = newPosition;
