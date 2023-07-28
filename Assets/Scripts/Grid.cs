@@ -106,9 +106,11 @@ public class Grid : MonoBehaviour
                 lObject.Add(gameOb);
             }
         }
+        transform.Rotate(new Vector3(1, 0, 0), -2f);
     }
     private void Update()
     {
+
 
         if (Utils.isResetGrid) refreshUI();     
          if(Utils.rotationAroundYAxis != 0 && currentRotationAroundYAxis!=Utils.rotationAroundYAxis && Input.touchCount == 2)
