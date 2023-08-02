@@ -26,7 +26,7 @@ public class Rotate : MonoBehaviour, IDragHandler
             float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
             float difference = currentMagnitude - preMagnitude;        
             zoom(difference);
-
+            
         }
           else  if (Input.GetMouseButtonDown(0))
          {
@@ -50,8 +50,6 @@ public class Rotate : MonoBehaviour, IDragHandler
         cam.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
         Debug.Log("TAG Utils.x: " + Utils.x + " Utils.y: " + Utils.y);
         Debug.Log("TAG target.position: " + target.position.x + "target.position: " + target.position.y);
-
-        //cam.transform.Translate(new Vector3(Utils.x, Utils.y, -distanceToTarget));
         cam.transform.Translate(new Vector3(5, 15, -distanceToTarget));
         previousPosition = newPosition;
     }

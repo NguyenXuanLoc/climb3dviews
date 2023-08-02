@@ -28,6 +28,7 @@ public class Grid : MonoBehaviour
     [SerializeField] public GameObject cube21;
     [SerializeField] public GameObject cube22;
     [SerializeField] public Camera camera;
+    [SerializeField] public GameObject wallObject;
 
     public List<GameObject> lObject = new List<GameObject>();
     float currentRotationAroundYAxis;
@@ -36,14 +37,15 @@ public class Grid : MonoBehaviour
     private void Start()
     { 
         Utils.setFieldOfView(camera.fieldOfView);
-        /*return;*/
+        return; 
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json); 
-
+         
     }
     public void RecieveData(string data)
-    {
-        string json = data; 
+    { 
+        Box.setRoute(data);
+        string json = data;  
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
         Utils.setHeightOfWall(int.Parse(gridData.Data.Height.ToString()));
         setFocusPosition(int.Parse(gridData.Data.Height.ToString()));
@@ -106,14 +108,43 @@ public class Grid : MonoBehaviour
                 lObject.Add(gameOb);
             }
         }
+        transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
+        camera.transform.position = setPositionCamera(gridData.Data.Height); 
+        Utils.setDefaultPositionCamera(setPositionCamera(gridData.Data.Height));
+    } 
+    private Vector3 setPositionCamera(long height)
+    { 
+        switch (height)
+        { 
+            case 3: return new Vector3(Utils.x, 28, -50);
+            case 6: return new Vector3(Utils.x,30, -50);
+            case 9: return new Vector3(5, 30, -50);    
+            case 12: return new Vector3(5, 35, -55);     
+            default: return new Vector3(Utils.x, Utils.y, -30);
+        }
     }
+     
+    private float setRotateX(long height)
+    {
+        switch (height)
+        {
+            case 3: return -4.2f;   
+            case 6: return -2f;
+            case 9: return -1.8f; 
+            case 12: return -1.9f; 
+            default: return -2f;
+
+        }
+    }
+
+
     private void Update()
     {
+
 
         if (Utils.isResetGrid) refreshUI();     
          if(Utils.rotationAroundYAxis != 0 && currentRotationAroundYAxis!=Utils.rotationAroundYAxis && Input.touchCount == 2)
         { 
-        //    transform.Rotate(new Vector3(0, 1, 0), Utils.rotationAroundYAxis, Space.World);
             currentRotationAroundYAxis = Utils.rotationAroundYAxis;
         }
     } 
@@ -121,26 +152,22 @@ public class Grid : MonoBehaviour
 
     void refreshUI()   
     {
-        camera.fieldOfView = Utils.fieldOfView;
-        Utils.setRorationAroundXY(0,0); 
-        Utils.setX(5f);
-        Utils.setY(15f);
-        /*Utils.setHeightOfWall(0);*/
-        Vector3 move = new Vector3(Utils.x,Utils.y, -30);
-        camera.transform.position = move;
-        Vector3 moveGrid = new Vector3(5,positionY, 0);
-        transform.position = moveGrid;
-        /*transform.Rotate(new Vector3(0, 1, 0), 0, Space.World);*/
-        transform.localRotation = Quaternion.Euler(0, 0, 0);
-    }
+        camera.fieldOfView = Utils.fieldOfView; 
+        Utils.setRorationAroundXY(0,0);  
+        Vector3 move = new Vector3(Utils.x,Utils.y, Utils.z);
+        camera.transform.position = move; 
+        Vector3 moveGrid = new Vector3(5,Utils.positionYBox, 0);
+        wallObject.transform.position = moveGrid;
+        wallObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+    } 
 
-    void setFocusPosition(int height)
+    void setFocusPosition(int height) 
     {
         int value = 0;
         switch (height)
-        {
+        { 
             case 3:
-                value = 7;
+                value = 2;
                 break;      
             case 6:
                 value = 14;
@@ -148,18 +175,20 @@ public class Grid : MonoBehaviour
             case 9:
                 value = 21;
                 break;
-            case 12:
+            case 12: 
                 value = 28;
                 break;
         }
         positionY = value;
-        transform.position = new Vector3(5, value, 0);
+       gameObject.transform.position = new Vector3(5, value, 0);
     }
 
     public void DestroyView(string data)
     {
+        Box.setDestroyView(true);
         Debug.Log("TAG DESTREOY VIEW");
-        refreshUI();
+        refreshUI();  
+        Destroy(wallObject);
         foreach (GameObject ob in lObject)
         {
             Destroy(ob);
