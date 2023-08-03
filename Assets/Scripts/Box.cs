@@ -7,16 +7,16 @@ public class Box : MonoBehaviour
 {
     [SerializeField] public GameObject box;
     [SerializeField] public GameObject roof;
-    long height = 0; 
-    bool isExistBox = false;
-    static bool isDestroy = false;
+    public static long height = 0;
+    public static bool isExistBox = false;
+    public static bool isDestroy = false;
     public static string routeStr = "";
-    public List<GameObject> lObject = new List<GameObject>();
+    public static List<GameObject> lObject = new List<GameObject>();
     void Start()  
     { 
-      //  string json = Resources.Load<TextAsset>("data").text;
-      //  RecieveData(json); 
-    }
+/*        string json = Resources.Load<TextAsset>("data").text;
+        RecieveData(json); 
+*/    }
     public static void setDestroyView(bool value)
     {
         isDestroy = value;
@@ -25,16 +25,18 @@ public class Box : MonoBehaviour
     {
         routeStr = value;
     }
+    int count = 0;
     private void Update()
-    {
+    { 
+        count++;
         if(!isExistBox && routeStr != "")
         {
             RecieveData(routeStr);
             isExistBox = true; 
-        } 
+        }  
         if (routeStr == "") height = 0;
-        if (isDestroy) DestroyView();
-    }
+       // if (isDestroy) DestroyView();
+    } 
     public void RecieveData(string data)
     {
         string json = data;
@@ -43,10 +45,17 @@ public class Box : MonoBehaviour
         transform.position = new Vector3(5.48f, -0.9f, -1.3f);
         addGameObject(box);
         addGameObject(roof); 
+    } 
+    private void OnApplicationFocus(bool focus) 
+    { 
+        print("TAG OnApplicationFocus: " + focus);
     }
-
+    private void OnApplicationPause(bool pause)
+    { 
+        print("TAG ON PAUSE: "+pause);
+    }
     void addGameObject(GameObject gameObj) 
-    {
+    { 
         var gameOb = Instantiate(gameObj, new Vector3(),Quaternion.identity);
         gameOb.transform.Rotate(new Vector3(0, 180, 0));
         gameOb.transform.localScale = new Vector3(3.91f, getScaleY(height), setScaleX(height));  
@@ -56,12 +65,13 @@ public class Box : MonoBehaviour
         gameOb.transform.parent = transform;
         lObject.Add(gameOb);
     }
-    public void DestroyView()
-    {
+    public static void DestroyView()
+    { 
         print("TAG DestroyView BOX");
         height = 0;
         isExistBox = false;
         isDestroy = false;
+        routeStr = "";
         foreach (GameObject ob in lObject)
         {
             Destroy(ob);
@@ -94,7 +104,7 @@ public class Box : MonoBehaviour
     float setPositionY(long height) 
     {
         switch (height)
-        { 
+        {  
             case 3: return -0.85f;  
             case 6:
             case 9: return -1.63f;
@@ -105,11 +115,11 @@ public class Box : MonoBehaviour
     float getScaleY(long height)
     {  
         switch (height)
-        {
-            case 3: return 1.198f; 
+        { 
+            case 3: return 1.268f; 
             case 6: return 2.5f;
-            case 9: return 3.65f;   
-            case 12: return 4.792f;  
+            case 9: return 3.68f;     
+            case 12: return 4.89f;  
             default: return 3.65f; 
         }
     }

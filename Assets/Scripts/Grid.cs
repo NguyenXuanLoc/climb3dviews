@@ -29,19 +29,29 @@ public class Grid : MonoBehaviour
     [SerializeField] public GameObject cube22;
     [SerializeField] public Camera camera;
     [SerializeField] public GameObject wallObject;
-
+     
     public List<GameObject> lObject = new List<GameObject>();
     float currentRotationAroundYAxis;
 
     int positionY = 0;
     private void Start()
-    { 
+    {     
         Utils.setFieldOfView(camera.fieldOfView);
         return; 
         string json = Resources.Load<TextAsset>("data").text;
-        RecieveData(json); 
-         
+        RecieveData(json);  
+           
     }
+
+    private void OnApplicationFocus(bool focus)
+    {
+  //      print("TAG OnApplicationFocus: GRID" + focus);
+    }
+    private void OnApplicationPause(bool pause)
+    { 
+   //     print("TAG ON PAUSE: GRID" + pause);
+    }
+
     public void RecieveData(string data)
     { 
         Box.setRoute(data);
@@ -96,16 +106,16 @@ public class Grid : MonoBehaviour
                                                                                                  : hold[d][l].type == "20"
                                                                                                      ? cube20
                                                                                                      : hold[d][l].type == "21"
-                                                                                                          ? cube21
+                                                                                                          ? cube21 
                                                                                                         : hold[d][l].type == "22"
                                                                                                           ? cube22
                                                                                                          : cube01, 
                          new Vector3(l, d),
                          Quaternion.identity);
-                gameOb.transform
-                 .Rotate(new Vector3(0, 180, hold[d][l].rotation));
+                gameOb.transform      
+                 .Rotate(new Vector3(180, 0, hold[d][l].rotation));
                 gameOb.transform.parent = transform;
-                lObject.Add(gameOb);
+                lObject.Add(gameOb); 
             }
         }
         transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
@@ -138,8 +148,8 @@ public class Grid : MonoBehaviour
     }
 
 
-    private void Update()
-    {
+    private void Update() 
+    { 
 
 
         if (Utils.isResetGrid) refreshUI();     
@@ -184,11 +194,10 @@ public class Grid : MonoBehaviour
     }
 
     public void DestroyView(string data)
-    {
-        Box.setDestroyView(true);
+    {  
+        Box.DestroyView();
         Debug.Log("TAG DESTREOY VIEW");
         refreshUI();  
-        Destroy(wallObject);
         foreach (GameObject ob in lObject)
         {
             Destroy(ob);

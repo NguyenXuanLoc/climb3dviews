@@ -818,14 +818,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cube01: {fileID: 919132149155446097, guid: 47e18ef3f89868d4fa9838c13e14295e, type: 3}
-  cube02: {fileID: 919132149155446097, guid: 99df2863917c8db459d4d1701417f5bf, type: 3}
-  cube03: {fileID: 919132149155446097, guid: c803e6b849798b64c8e205ee281d4578, type: 3}
-  cube04: {fileID: 919132149155446097, guid: ae3c7a8e70a2c594d900a3f797e6ab76, type: 3}
-  cube05: {fileID: 919132149155446097, guid: 0e739cd384d9d534298cc5505f10a254, type: 3}
-  cube06: {fileID: 919132149155446097, guid: b8c0d4e5ff6fae243aefdda9fda77723, type: 3}
-  cube07: {fileID: 919132149155446097, guid: e4b79a32fbd3fa1439fe0a39563f0b70, type: 3}
-  cube08: {fileID: 919132149155446097, guid: 0647ed4861a4b3f41ab13d2e392c061a, type: 3}
-  cube09: {fileID: 919132149155446097, guid: fdcb4671a0c8c90478b15d231fad1e74, type: 3}
+  cube02: {fileID: 919132149155446097, guid: f3d0f6fa0192d4b499729ff1e9739699, type: 3}
+  cube03: {fileID: 919132149155446097, guid: 2a7c785d9db3dbe479101faa6a4aba1b, type: 3}
+  cube04: {fileID: 919132149155446097, guid: d09f53a59e8ee3447b262e5f27af3036, type: 3}
+  cube05: {fileID: 919132149155446097, guid: 518c53bee3785874aba41c05270febac, type: 3}
+  cube06: {fileID: 919132149155446097, guid: 1586da650053a5646ac8fe39a072a990, type: 3}
+  cube07: {fileID: 919132149155446097, guid: d9361b5c2036cab48980598de1b2c207, type: 3}
+  cube08: {fileID: 919132149155446097, guid: eee6599bdefcbbd4a9bd68d09b0a4d55, type: 3}
+  cube09: {fileID: 919132149155446097, guid: 09c04834a40a77a4a9a492bc006e3a3b, type: 3}
   cube10: {fileID: 919132149155446097, guid: bedf94b667921e74d9c8859366ca6497, type: 3}
   cube11: {fileID: 919132149155446097, guid: bf3cc4e43254ce44fa45b92109b9a920, type: 3}
   cube12: {fileID: 919132149155446097, guid: f1ba547d7cba4914d80933df07e7a85b, type: 3}
