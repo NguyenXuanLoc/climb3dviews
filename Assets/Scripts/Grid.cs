@@ -29,7 +29,7 @@ public class Grid : MonoBehaviour
     [SerializeField] public GameObject cube22;
     [SerializeField] public Camera camera;
     [SerializeField] public GameObject wallObject;
-
+     
     public List<GameObject> lObject = new List<GameObject>();
     float currentRotationAroundYAxis;
 
@@ -37,10 +37,10 @@ public class Grid : MonoBehaviour
     private void Start()
     {     
         Utils.setFieldOfView(camera.fieldOfView);
-        return;
+        return; 
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);  
-         
+           
     }
 
     private void OnApplicationFocus(bool focus)

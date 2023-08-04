@@ -26,12 +26,12 @@
             "gender": "female",
             "last_name": "Phạm Văn",
             "account_id": 1,
-            "height": 19.0,
+            "height": 19.0, 
             "favorite_route_grade": 2,
             "first_name": "Mànhb fb",
-            "role": "user,trainer",
+            "role": "user,trainer", 
             "username": null
         }
     },
     "pagination_details": null
-} 
+}

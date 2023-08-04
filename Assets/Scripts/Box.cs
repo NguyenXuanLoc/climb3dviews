@@ -104,7 +104,7 @@ public class Box : MonoBehaviour
     float setPositionY(long height) 
     {
         switch (height)
-        { 
+        {  
             case 3: return -0.85f;  
             case 6:
             case 9: return -1.63f;
@@ -115,11 +115,11 @@ public class Box : MonoBehaviour
     float getScaleY(long height)
     {  
         switch (height)
-        {
-            case 3: return 1.198f; 
+        { 
+            case 3: return 1.268f; 
             case 6: return 2.5f;
-            case 9: return 3.65f;   
-            case 12: return 4.792f;  
+            case 9: return 3.68f;     
+            case 12: return 4.89f;  
             default: return 3.65f; 
         }
     }
