@@ -2,31 +2,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using d;
 using System.Threading.Tasks;
+using System;
 
 public class Grid : MonoBehaviour 
 {
-    [SerializeField] public GameObject cube01;
-    [SerializeField] public GameObject cube02;
-    [SerializeField] public GameObject cube03;
-    [SerializeField] public GameObject cube04;
-    [SerializeField] public GameObject cube05;
-    [SerializeField] public GameObject cube06;
-    [SerializeField] public GameObject cube07;
-    [SerializeField] public GameObject cube08;
-    [SerializeField] public GameObject cube09;
-    [SerializeField] public GameObject cube10;
-    [SerializeField] public GameObject cube11;
-    [SerializeField] public GameObject cube12;
-    [SerializeField] public GameObject cube13;
-    [SerializeField] public GameObject cube14;
-    [SerializeField] public GameObject cube15;
-    [SerializeField] public GameObject cube16;
-    [SerializeField] public GameObject cube17;
-    [SerializeField] public GameObject cube18;
-    [SerializeField] public GameObject cube19;
-    [SerializeField] public GameObject cube20;
-    [SerializeField] public GameObject cube21;
-    [SerializeField] public GameObject cube22;
+    [SerializeField] public List<GameObject> lHoldSet;
     [SerializeField] public Camera camera;
     [SerializeField] public GameObject wallObject;
      
@@ -35,7 +15,7 @@ public class Grid : MonoBehaviour
 
     int positionY = 0;
     private void Start()
-    {     
+    {
         Utils.setFieldOfView(camera.fieldOfView);
         return; 
         string json = Resources.Load<TextAsset>("data").text;
@@ -65,63 +45,48 @@ public class Grid : MonoBehaviour
             for (int l = 0; l < hold[d].Length; l++)
             { 
      
-                var gameOb = Instantiate(hold[d][l].type == "1"
-                         ? cube01
-                         : hold[d][l].type == "2"
-                             ? cube02
-                             : hold[d][l].type == "3"
-                                 ? cube03
-                                 : hold[d][l].type == "4"
-                                     ? cube04
-                                     : hold[d][l].type == "5"
-                                         ? cube05
-                                         : hold[d][l].type == "6"
-                                             ? cube06
-                                             : hold[d][l].type == "7"
-                                                 ? cube07
-                                                 : hold[d][l].type == "8"
-                                                     ? cube08
-                                                     : hold[d][l].type == "9"
-                                                         ? cube09
-                                                         : hold[d][l].type == "10"
-                                                             ? cube10
-                                                             : hold[d][l].type == "11"
-                                                                 ? cube11
-                                                                 : hold[d][l].type == "12"
-                                                                     ? cube12
-                                                                     : hold[d][l].type == "13"
-                                                                         ? cube13
-                                                                         : hold[d][l].type == "14"
-                                                                             ? cube14
-                                                                             : hold[d][l].type == "15"
-                                                                                 ? cube15
-                                                                                 : hold[d][l].type == "16"
-                                                                                     ? cube16
-                                                                                     : hold[d][l].type == "17"
-                                                                                         ? cube17
-                                                                                         : hold[d][l].type == "18"
-                                                                                             ? cube18
-                                                                                             : hold[d][l].type == "19"
-                                                                                                 ? cube19
-                                                                                                 : hold[d][l].type == "20"
-                                                                                                     ? cube20
-                                                                                                     : hold[d][l].type == "21"
-                                                                                                          ? cube21 
-                                                                                                        : hold[d][l].type == "22"
-                                                                                                          ? cube22
-                                                                                                         : cube01, 
-                         new Vector3(l, d),
-                         Quaternion.identity);
-                gameOb.transform      
-                 .Rotate(new Vector3(180, 0, hold[d][l].rotation));
+                var gameOb = Instantiate(getHoldById(hold[d][l].type), 
+                         new Vector3(l, d), Quaternion.identity); 
+                gameOb.transform.Rotate(new Vector3(180, 0, getRotation(hold[d][l].rotation)));
                 gameOb.transform.parent = transform;
                 lObject.Add(gameOb); 
-            }
+            } 
         }
         transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
         camera.transform.position = setPositionCamera(gridData.Data.Height); 
         Utils.setDefaultPositionCamera(setPositionCamera(gridData.Data.Height));
     } 
+    private float getRotation(int rotation)
+    {
+        switch (rotation)
+        { 
+            case 0: return 0;
+            case 1: return 90;
+            case 2: return 180;
+            case 3: return 270;
+            default: return 0;
+        }
+    }
+
+    private GameObject getHoldById(string id)
+    { 
+        for(int i = 0; i < lHoldSet.Count; i++)
+        { 
+            if (lHoldSet[i].gameObject.name==("cube" + id).ToString()) 
+            {
+                try
+                {
+                    return lHoldSet[i+1];
+                } 
+                catch(Exception e)
+                {
+
+                }
+              
+            }
+        }
+        return lHoldSet[0];
+    }
     private Vector3 setPositionCamera(long height)
     { 
         switch (height)
@@ -195,7 +160,7 @@ public class Grid : MonoBehaviour
 
     public void DestroyView(string data)
     {  
-        Box.DestroyView();
+        Box.DestroyView(); 
         Debug.Log("TAG DESTREOY VIEW");
         refreshUI();  
         foreach (GameObject ob in lObject)
