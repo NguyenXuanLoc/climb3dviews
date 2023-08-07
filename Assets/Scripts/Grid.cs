@@ -47,23 +47,30 @@ public class Grid : MonoBehaviour
      
                 var gameOb = Instantiate(getHoldById(hold[d][l].type), 
                          new Vector3(l, d), Quaternion.identity); 
-                gameOb.transform.Rotate(new Vector3(180, 0, getRotation(hold[d][l].rotation)));
+                gameOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation)));
                 gameOb.transform.parent = transform;
                 lObject.Add(gameOb); 
-            } 
+            }  
         }
         transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
         camera.transform.position = setPositionCamera(gridData.Data.Height); 
         Utils.setDefaultPositionCamera(setPositionCamera(gridData.Data.Height));
     } 
     private float getRotation(int rotation)
-    {
+    {  
+        return rotation;
+        if(rotation!=0)
+        print("TAG rotation: " + rotation);
         switch (rotation)
         { 
             case 0: return 0;
-            case 1: return 90;
-            case 2: return 180;
-            case 3: return 270;
+            case 1: 
+            case -1: 
+                return -90;
+            case 2:
+            case -2: return 180;
+            case 3:  
+            case -3: return 270;
             default: return 0;
         }
     }
