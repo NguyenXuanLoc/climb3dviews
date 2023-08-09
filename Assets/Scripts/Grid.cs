@@ -50,7 +50,7 @@ public class Grid : MonoBehaviour
                 gameOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation)));
                 gameOb.transform.parent = transform;
                 lObject.Add(gameOb); 
-            }  
+            }   
         }
         transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
         camera.transform.position = setPositionCamera(gridData.Data.Height); 
@@ -95,15 +95,16 @@ public class Grid : MonoBehaviour
         return lHoldSet[0];
     }
     private Vector3 setPositionCamera(long height)
-    { 
-        switch (height)
-        { 
-            case 3: return new Vector3(Utils.x, 28, -50);
-            case 6: return new Vector3(Utils.x,30, -50);
-            case 9: return new Vector3(5, 30, -50);    
-            case 12: return new Vector3(5, 35, -55);     
-            default: return new Vector3(Utils.x, Utils.y, -30);
-        }
+    {
+        bool isAndroid = (Application.platform == RuntimePlatform.Android);
+        switch (height) 
+        {  
+            case 3: return new Vector3(Utils.x, isAndroid ? 28: 22, -50);
+            case 6: return new Vector3(Utils.x, isAndroid ?30 :24, -50);
+            case 9: return new Vector3(5, isAndroid ? 30 : 24, -50);    
+            case 12: return new Vector3(5, isAndroid ? 35 :29, -55);     
+            default: return new Vector3(Utils.x, Utils.y, -30); 
+        } 
     }
      
     private float setRotateX(long height)
