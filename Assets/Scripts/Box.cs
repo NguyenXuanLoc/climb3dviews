@@ -76,15 +76,23 @@ public class Box : MonoBehaviour
         {
             Destroy(ob);
         }
-    }
+    } 
 
     float setScaleX(long height) 
     {
         switch (height)
         {
+            case 1: return 2.3f;
+            case 2: return 2.3f;
             case 3: return 2.3f;
-            case 6: 
+            case 4: return 2.3f;
+            case 5: return 2.3f;
+            case 6:  
+            case 7:  
+            case 8:  
             case 9: 
+            case 10: 
+            case 11: 
             case 12:
                 return 2.4f;
             default: return -1.63f;
@@ -94,9 +102,17 @@ public class Box : MonoBehaviour
     {
         switch (height)
         {  
+            case 1: return -2f;     
+            case 2: return -2.1f;     
             case 3: return -2.3f;     
+            case 4: return -2.3f;     
+            case 5: return -2.3f;     
             case 6: return -2.01f;  
+            case 7: return -2.01f;  
+            case 8: return -2.01f;  
             case 9: return -1.96f;   
+            case 10: return -1.96f;   
+            case 11: return -1.96f;   
             case 12: return -1.96f;   
             default: return -1.63f; 
         }
@@ -105,21 +121,37 @@ public class Box : MonoBehaviour
     {
         switch (height)
         {  
+            case 1: return -0.7f;  
+            case 2: return -0.85f;   
             case 3: return -0.85f;  
-            case 6:
+            case 4: return -0.85f;  
+            case 5: return -0.85f;  
+            case 6: return -0.85f;  
+            case 7: return -0.85f;  
+            case 8: return -0.85f;  
             case 9: return -1.63f;
+            case 10: return -1.63f;
+            case 11: return -1.63f;
             case 12: return -1.63f;
             default: return -1.63f;
         }
     } 
-    float getScaleY(long height)
+    float getScaleY(long height)                                
     {  
-        switch (height)
-        { 
-            case 3: return 1.268f; 
-            case 6: return 2.5f;
-            case 9: return 3.68f;     
-            case 12: return 4.89f;  
+        switch (height)                    
+        {  
+            case 1: return 0.41f; 
+            case 2: return 0.68f;   
+            case 3: return 1f; 
+            case 4: return 1.33f; 
+            case 5: return 1.66f; 
+            case 6: return 1.99f; 
+            case 7: return 2.32f;
+            case 8: return 2.65f;
+            case 9: return 2.98f;     
+            case 10: return 3.31f;     
+            case 11: return 3.64f;      
+            case 12: return 3.97f;  
             default: return 3.65f; 
         }
     }
