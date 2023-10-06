@@ -19,8 +19,7 @@ public class Grid : MonoBehaviour
         Utils.setFieldOfView(camera.fieldOfView);
         return;
         string json = Resources.Load<TextAsset>("data").text;
-        RecieveData(json);  
-           
+        RecieveData(json);      
     }
 
     private void OnApplicationFocus(bool focus)
@@ -68,12 +67,12 @@ public class Grid : MonoBehaviour
             case -1: 
                 return -90;
             case 2:
-            case -2: return 180;
+            case -2: return 180; 
             case 3:  
             case -3: return 270;
             default: return 0;
         }
-    }
+    } 
 
     private GameObject getHoldById(string id)
     { 
@@ -99,9 +98,17 @@ public class Grid : MonoBehaviour
         bool isAndroid = (Application.platform == RuntimePlatform.Android);
         switch (height) 
         {  
+            case 1: return new Vector3(Utils.x, 28, -50); 
+            case 2: return new Vector3(Utils.x, 28, -50); 
             case 3: return new Vector3(Utils.x, 28, -50); 
+            case 4: return new Vector3(Utils.x, 28, -50); 
+            case 5: return new Vector3(Utils.x, 28, -50); 
             case 6: return new Vector3(Utils.x, isAndroid ?30 :27, -50);
+            case 7: return new Vector3(Utils.x, isAndroid ?30 :27, -50);
+            case 8: return new Vector3(Utils.x, isAndroid ?30 :27, -50);
             case 9: return new Vector3(5, isAndroid ? 30 : 27, -50);    
+            case 10: return new Vector3(5, isAndroid ? 30 : 27, -50);    
+            case 11: return new Vector3(5, isAndroid ? 30 : 27, -50);    
             case 12: return new Vector3(5, isAndroid ? 35 :32, -55);     
             default: return new Vector3(Utils.x, Utils.y, -30); 
         } 
@@ -110,15 +117,23 @@ public class Grid : MonoBehaviour
     private float setRotateX(long height)
     {
         switch (height)
-        {
+        { 
+            case 1: return -10.9f;   
+            case 2: return -9.5f;    
             case 3: return -4.2f;   
-            case 6: return -2f;
+            case 4: return -4.2f;   
+            case 5: return -4.2f;   
+            case 6: return -4f;   
+            case 7: return -4f;   
+            case 8: return -3.1f;   
             case 9: return -1.8f; 
+            case 10: return -1.8f; 
+            case 11: return -1.8f; 
             case 12: return -1.9f; 
             default: return -2f;
 
         }
-    }
+    }                
 
 
     private void Update() 
@@ -149,17 +164,25 @@ public class Grid : MonoBehaviour
         int value = 0;
         switch (height)
         { 
+            case 1:
+            case 2:
             case 3:
+            case 4:
+            case 5:
                 value = 2;
                 break;      
             case 6:
+            case 7: 
+            case 8:
                 value = 14; break;
             case 9:
+            case 10:
+            case 11:
                 value = 21;
                 break;
             case 12: 
                 value = 28;
-                break;
+                break; 
         }
         positionY = value;
        gameObject.transform.position = new Vector3(5, value, 0);
