@@ -1,0 +1,4 @@
+repository "grid_view@local"
+  path "/"
+    br "/main"
+    co "/main"
