@@ -20,7 +20,7 @@ public class Grid : MonoBehaviour
         return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
-    }
+    }  
 
     private void OnApplicationFocus(bool focus)
     {
@@ -33,9 +33,9 @@ public class Grid : MonoBehaviour
 
     public void RecieveData(string data)
     { 
-        Box.setRoute(data);
+        Box.setRoute(data); 
         string json = data;  
-        GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
+        GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json); 
         Utils.setHeightOfWall(int.Parse(gridData.Data.Height.ToString()));
         setFocusPosition(int.Parse(gridData.Data.Height.ToString()));
         Hold[][] hold = Newtonsoft.Json.JsonConvert.DeserializeObject<Hold[][]>(gridData.Data.Holds);
@@ -77,14 +77,20 @@ public class Grid : MonoBehaviour
     private GameObject getHoldById(string id)
     { 
         for(int i = 0; i < lHoldSet.Count; i++)
-        { 
-            if (lHoldSet[i].gameObject.name==("cube" + id).ToString()) 
+        {
+            if (id.Equals("Empty"))
             {
-                try
+                return lHoldSet[0];
+            }    
+            //print("TAG ID: "+ id + ("cube" + (int.Parse(id) - 1).ToString()));
+            if (lHoldSet[i].gameObject.name==("cube" + (int.Parse(id)).ToString()).ToString()) 
+            {    
+                try 
                 {
-                    return lHoldSet[i+1];
+                    print("TAG HOLDSET: " + lHoldSet[i].gameObject.name);
+                    return lHoldSet[i];
                 } 
-                catch(Exception e)
+                catch(Exception e) 
                 {
 
                 }
@@ -118,7 +124,7 @@ public class Grid : MonoBehaviour
     {
         switch (height)
         { 
-            case 1: return -10.9f;   
+            case 1: return -18f;   
             case 2: return -9.5f;    
             case 3: return -4.2f;   
             case 4: return -4.2f;   
