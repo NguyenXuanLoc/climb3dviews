@@ -13,7 +13,7 @@ public class Grid : MonoBehaviour
     public List<GameObject> lObject = new List<GameObject>();
     float currentRotationAroundYAxis;
 
-    int positionY = 0;
+    float positionY = 0;
     private void Start()
     {
         Utils.setFieldOfView(camera.fieldOfView);
@@ -21,15 +21,6 @@ public class Grid : MonoBehaviour
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
     }  
-
-    private void OnApplicationFocus(bool focus)
-    {
-  //      print("TAG OnApplicationFocus: GRID" + focus);
-    }
-    private void OnApplicationPause(bool pause)
-    { 
-   //     print("TAG ON PAUSE: GRID" + pause);
-    }
 
     public void RecieveData(string data)
     { 
@@ -124,16 +115,16 @@ public class Grid : MonoBehaviour
     {
         switch (height)
         { 
-            case 1: return -18f;   
+            case 1: return -17f;   
             case 2: return -9.5f;    
-            case 3: return -4.2f;   
+            case 3: return -4.2f;
             case 4: return -4.2f;   
             case 5: return -4.2f;   
             case 6: return -4f;   
             case 7: return -4f;   
             case 8: return -3.1f;   
             case 9: return -1.8f; 
-            case 10: return -1.8f; 
+            case 10: return -1.8f;
             case 11: return -1.8f; 
             case 12: return -1.9f; 
             default: return -2f;
@@ -167,10 +158,12 @@ public class Grid : MonoBehaviour
 
     void setFocusPosition(int height) 
     {
-        int value = 0;
+        float value = 0;
         switch (height)
         { 
             case 1:
+                value = 2.1f;
+                break;
             case 2:
             case 3:
             case 4:
