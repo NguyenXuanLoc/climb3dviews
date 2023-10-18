@@ -7,6 +7,8 @@ public class Box : MonoBehaviour
 {
     [SerializeField] public GameObject box;
     [SerializeField] public GameObject roof;
+    [SerializeField] public GameObject wall;
+    [SerializeField] public GameObject grid;
     public static long height = 0;
     public static bool isExistBox = false;
     public static bool isDestroy = false;
@@ -25,12 +27,10 @@ public class Box : MonoBehaviour
     {
         routeStr = value;
     }
-    int count = 0;
     private void Update()
     { 
-        count++;
-        if(!isExistBox && routeStr != "")
-        {
+        if(!isExistBox && routeStr != "") 
+        { 
             RecieveData(routeStr);
             isExistBox = true; 
         }  
@@ -41,19 +41,14 @@ public class Box : MonoBehaviour
     {
         string json = data;
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json);
-        height = gridData.Data.Height;
+        height = gridData.Data.Height; 
+        wall.transform.Translate(new Vector3(0, height*2, 0));
+        grid.transform.Translate(new Vector3(0, -height*2, 0));
         transform.position = new Vector3(5.48f, -0.9f, -1.3f);
         addGameObject(box);
         addGameObject(roof); 
     } 
-    private void OnApplicationFocus(bool focus) 
-    { 
-        print("TAG OnApplicationFocus: " + focus);
-    }
-    private void OnApplicationPause(bool pause)
-    { 
-        print("TAG ON PAUSE: "+pause);
-    }
+    
     void addGameObject(GameObject gameObj) 
     { 
         var gameOb = Instantiate(gameObj, new Vector3(),Quaternion.identity);
@@ -101,27 +96,27 @@ public class Box : MonoBehaviour
     float setPositionZ(long height)
     {
         switch (height)
-        {  
-            case 1: return -2f;     
-            case 2: return -2.1f;     
-            case 3: return -2.3f;     
-            case 4: return -2.3f;     
-            case 5: return -2.3f;     
-            case 6: return -2.01f;  
-            case 7: return -2.01f;  
-            case 8: return -2.01f;  
-            case 9: return -1.96f;   
-            case 10: return -1.96f;   
-            case 11: return -1.96f;   
-            case 12: return -1.96f;   
-            default: return -1.63f; 
+        {      
+            case 1: return -1.25f;        
+            case 2: return -1.4f;      
+            case 3: return -1.3f;     
+            case 4: return -1.2f;     
+            case 5: return -1.1f;      
+            case 6: return -1f;   
+            case 7: return -0.9f;  
+            case 8: return -0.7f;    
+            case 9: return -0.7f;   
+            case 10: return -0.5f;    
+            case 11: return -0.3f;   
+            case 12: return 0f;    
+            default: return 0.5f; 
         }
     }
     float setPositionY(long height) 
     {
         switch (height)
         {   
-            case 1: return -0.56f;  
+            case 1: return -0.51f;  
             case 2: return -0.85f;   
             case 3: return -0.85f;  
             case 4: return -0.85f;  
