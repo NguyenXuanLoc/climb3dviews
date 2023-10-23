@@ -97,18 +97,18 @@ public class Box : MonoBehaviour
     {
         switch (height)
         {      
-            case 1: return -1.25f;        
+            case 1: return -1.33f;        
             case 2: return -1.4f;      
-            case 3: return -1.3f;     
-            case 4: return -1.2f;     
+            case 3: return -1.7f;     
+            case 4: return -1.5f;     
             case 5: return -1.1f;      
-            case 6: return -1f;   
-            case 7: return -0.9f;  
-            case 8: return -0.7f;    
-            case 9: return -0.7f;   
-            case 10: return -0.5f;    
-            case 11: return -0.3f;   
-            case 12: return 0f;    
+            case 6: return -0.5f;    
+            case 7: return -0.3f;  
+            case 8: return -0.55f;    
+            case 9: return -0.85f;   
+            case 10: return -0.7f;  //  
+            case 11: return -0.6f;   
+            case 12: return -0.25f;    
             default: return 0.5f; 
         }
     }
@@ -117,7 +117,7 @@ public class Box : MonoBehaviour
         switch (height)
         {   
             case 1: return -0.51f;  
-            case 2: return -0.85f;   
+            case 2: return -0.7f;   
             case 3: return -0.85f;  
             case 4: return -0.85f;  
             case 5: return -0.85f;  
@@ -136,7 +136,7 @@ public class Box : MonoBehaviour
         switch (height)                    
         {    
             case 1: return 0.32f; 
-            case 2: return 0.68f;   
+            case 2: return 0.64f;   
             case 3: return 1f;  
             case 4: return 1.33f; 
             case 5: return 1.66f; 

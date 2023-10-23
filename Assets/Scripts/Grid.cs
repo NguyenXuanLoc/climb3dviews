@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using d;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.SceneManagement;
 
 public class Grid : MonoBehaviour 
 {
@@ -12,7 +13,7 @@ public class Grid : MonoBehaviour
      
     public List<GameObject> lObject = new List<GameObject>();
     float currentRotationAroundYAxis;
-
+    long height = 0;
     float positionY = 0;
     private void Start()
     {
@@ -20,7 +21,7 @@ public class Grid : MonoBehaviour
         return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
-    }  
+    }
 
     public void RecieveData(string data)
     { 
@@ -40,12 +41,13 @@ public class Grid : MonoBehaviour
                 gameOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation)));
                 gameOb.transform.parent = transform;
                 lObject.Add(gameOb); 
-            }   
+            }
         }
+        height = gridData.Data.Height;
         transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
         camera.transform.position = setPositionCamera(gridData.Data.Height); 
         Utils.setDefaultPositionCamera(setPositionCamera(gridData.Data.Height));
-    } 
+    }
     private float getRotation(int rotation)
     {  
         return rotation;
@@ -114,7 +116,7 @@ public class Grid : MonoBehaviour
     private float setRotateX(long height)
     {
         switch (height)
-        { 
+        {
             case 1: return -17f;   
             case 2: return -9.5f;    
             case 3: return -4.2f;
@@ -145,16 +147,36 @@ public class Grid : MonoBehaviour
     } 
 
 
-    void refreshUI()   
+    void refreshUI()
     {
-        camera.fieldOfView = Utils.fieldOfView; 
+        camera.fieldOfView = Utils.fieldOfView;
         Utils.setRorationAroundXY(0,0);  
         Vector3 move = new Vector3(Utils.x,Utils.y, Utils.z);
-        camera.transform.position = move; 
-        Vector3 moveGrid = new Vector3(5,Utils.positionYBox, 0);
+        camera.transform.position = move;  
+        Vector3 moveGrid = new Vector3(5.63f,getDefaultPositionBox(height), 0);
         wallObject.transform.position = moveGrid;
         wallObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
-    } 
+    }
+     
+    float getDefaultPositionBox(long height)
+    {
+        switch (height)
+        {
+            case 1: return 2;
+            case 2: return 4;
+            case 3: return 6;
+            case 4: return 8;
+            case 5: return 10;
+            case 6: return 12;
+            case 7: return 14;
+            case 8: return 16;
+            case 9: return 18;
+            case 10: return 20;
+            case 11: return 22;
+            case 12: return 24; 
+            default: return 18;
+        }
+    }
 
     void setFocusPosition(int height) 
     {
@@ -196,7 +218,8 @@ public class Grid : MonoBehaviour
         {
             Destroy(ob);
         }
-    } 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
 
     public void GetFileCache(string data)
