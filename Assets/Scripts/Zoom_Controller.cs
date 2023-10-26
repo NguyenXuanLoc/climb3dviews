@@ -12,11 +12,11 @@ public class Zoom_Controller : MonoBehaviour
     float minScale = 26.99147f;
     private void Start()
     {
-    } 
+    }
     private void Update()
     {
         if (Input.touchCount == 2)
-        {
+        { 
             Touch touchZero = Input.GetTouch(0);
             Touch touchOne = Input.GetTouch(1);
             if(touchZero.phase == TouchPhase.Moved && touchOne.phase == TouchPhase.Moved)

@@ -12,13 +12,13 @@ public class Grid : MonoBehaviour
     [SerializeField] public GameObject wallObject;
      
     public List<GameObject> lObject = new List<GameObject>();
-    float currentRotationAroundYAxis;
+    float currentRotationAroundYAxis; 
     long height = 0;
     float positionY = 0;
     private void Start()
     {
         Utils.setFieldOfView(camera.fieldOfView);
-        return;
+        /*return;*/ 
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
     }
