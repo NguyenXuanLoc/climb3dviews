@@ -14,16 +14,19 @@ public class RotateController : MonoBehaviour
 
     private void Update()
     {
-
-        if (Input.GetMouseButtonDown(0))
+        if(Input.touchCount == 2 && ((Input.GetTouch(0).phase == TouchPhase.Began) || (Input.GetTouch(1).phase == TouchPhase.Began)))
+        {
+            previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
+        }
+       /* if (Input.GetMouseButtonDown(0))
         {  
             previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
         }
         else if (Input.GetMouseButtonDown(1))
         {
             previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
-        }
-        else if (Input.GetMouseButton(0) && Input.touchCount == 2 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
+        }*/ 
+        else if (/*Input.GetMouseButton(0) &&*/ Input.touchCount == 2 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
         {
             Utils.setRotate(true);
             Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);

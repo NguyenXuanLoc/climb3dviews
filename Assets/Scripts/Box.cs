@@ -65,7 +65,7 @@ public class Box : MonoBehaviour
         print("TAG DestroyView BOX");
         height = 0;
         isExistBox = false;
-        isDestroy = false;
+        isDestroy = false; 
         routeStr = "";
         foreach (GameObject ob in lObject)
         {

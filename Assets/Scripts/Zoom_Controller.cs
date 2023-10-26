@@ -12,7 +12,7 @@ public class Zoom_Controller : MonoBehaviour
     float minScale = 26.99147f;
     private void Start()
     {
-    }
+    } 
     private void Update()
     {
         if (Input.touchCount == 2)

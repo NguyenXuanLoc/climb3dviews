@@ -1,10 +1,12 @@
-﻿﻿//
-// Fingers Gestures
+﻿//
+// Fingers Lite Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
 // Source code may be used for personal or commercial projects.
 // Source code may NOT be redistributed or sold.
+// Please see license.txt file
 // 
+
 
 using System;
 using System.Collections.Generic;
@@ -105,10 +107,10 @@ namespace DigitalRubyShared
         /// <param name="screenY">Screen y in pixels</param>
         /// <param name="previousX">Previous screen x in pixels</param>
         /// <param name="previousY">Previous screen y in pixels</param>
-        /// <param name="pressure">Pressure if known (0 to 1), set to 1 if unknown</param>
+        /// <param name="pressure">Pressure if known (0 to 1)</param>
         /// <param name="platformSpecificTouch"></param>
         /// <param name="touchPhase"></param>
-        public GestureTouch(int platformSpecificId, float screenX, float screenY, float previousX, float previousY, float pressure = 1.0f, object platformSpecificTouch = null, TouchPhase touchPhase = TouchPhase.Unknown)
+        public GestureTouch(int platformSpecificId, float screenX, float screenY, float previousX, float previousY, float pressure, object platformSpecificTouch = null, TouchPhase touchPhase = TouchPhase.Unknown)
         {
             this.id = platformSpecificId;
             this.screenX = screenX;
@@ -351,7 +353,6 @@ namespace DigitalRubyShared
         private bool isRestarting;
         private int lastTrackTouchCount;
         private bool enabled = true;
-        private bool inReset;
 
         protected float PrevFocusX { get; private set; }
         protected float PrevFocusY { get; private set; }
@@ -539,30 +540,18 @@ namespace DigitalRubyShared
 
         private void ResetInternal(bool clearCurrentTrackedTouches)
         {
-            if (inReset)
+            if (clearCurrentTrackedTouches)
             {
-                return;
+                currentTrackedTouches.Clear();
             }
-            inReset = true;
-            try
-            {
-                if (clearCurrentTrackedTouches)
-                {
-                    currentTrackedTouches.Clear();
-                }
-                requireGestureRecognizersToFailThatHaveFailed.Clear();
-                touchStartLocations.Clear();
-                StartFocusX = PrevFocusX = StartFocusY = PrevFocusY = float.MinValue;
-                FocusX = FocusY = DeltaX = DeltaY = DistanceX = DistanceY = 0.0f;
-                Pressure = 0.0f;
-                velocityTracker.Reset();
-                RemoveFromActiveGestures();
-                SetState(GestureRecognizerState.Possible);
-            }
-            finally
-            {
-                inReset = false;
-            }
+            requireGestureRecognizersToFailThatHaveFailed.Clear();
+            touchStartLocations.Clear();
+            StartFocusX = PrevFocusX = StartFocusY = PrevFocusY = float.MinValue;
+            FocusX = FocusY = DeltaX = DeltaY = DistanceX = DistanceY = 0.0f;
+            Pressure = 0.0f;
+            velocityTracker.Reset();
+            RemoveFromActiveGestures();
+            SetState(GestureRecognizerState.Possible);
         }
 
         private
@@ -573,7 +562,7 @@ namespace DigitalRubyShared
 
 #endif
 
-        static void RunActionAfterDelayInternal(float seconds, System.Action action)
+        static void RunActionAfterDelayInternal(float seconds, Action action)
         {
             if (action == null)
             {
@@ -1239,7 +1228,7 @@ namespace DigitalRubyShared
         /// </summary>
         /// <param name="seconds">Delay in seconds</param>
         /// <param name="action">Action to run</param>
-        public static void RunActionAfterDelay(float seconds, System.Action action)
+        public static void RunActionAfterDelay(float seconds, Action action)
         {
             RunActionAfterDelayInternal(seconds, action);
         }
@@ -1484,13 +1473,13 @@ namespace DigitalRubyShared
         public bool IsRestarting { get { return isRestarting; } }
 
         /// <summary>
-        /// Whether additional touches were added to the gesture since the last execute state.
+        /// Whether additional touches were added to the pan gesture since the last execute state.
         /// </summary>
         public bool ReceivedAdditionalTouches { get; set; }
 
 #if !PCL && !HAS_TASKS
 
-        public delegate void CallbackMainThreadDelegate(float delay, System.Action callback);
+        public delegate void CallbackMainThreadDelegate(float delay, Action callback);
 
         public static CallbackMainThreadDelegate MainThreadCallback;
 

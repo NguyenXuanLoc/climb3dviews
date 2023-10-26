@@ -92,7 +92,6 @@
     <Compile Include="Assets\Scripts\Test\RotateTest.cs" />
     <Compile Include="Assets\TriLib\TriLibStandaloneFileBrowser\StandaloneFileBrowser\StandaloneFileBrowserAndroid.cs" />
     <Compile Include="Assets\Scripts\MoveAround.cs" />
-    <Compile Include="Assets\Scripts\LerpRotation.cs" />
     <Compile Include="Assets\TriLib\TriLibSamples\LoadExtraAnimations\Scripts\LoadExtraAnimationsSample.cs" />
     <Compile Include="Assets\TriLib\TriLibCore\Scripts\Utils\GraphicsSettingsUtils.cs" />
     <Compile Include="Assets\Scripts\Grid.cs" />
@@ -125,6 +124,7 @@
     <Compile Include="Assets\Scripts\Wall_Controller.cs" />
     <Compile Include="Assets\FingersLite\Script\Gestures\DeviceInfo.cs" />
     <Compile Include="Assets\TriLib\TriLibCore\Scripts\TextureLoader.cs" />
+    <Compile Include="Assets\Scripts\rotatez.cs" />
     <Compile Include="Assets\TriLib\TriLibStandaloneFileBrowser\StandaloneFileBrowser\StandaloneFileBrowserWinRT.cs" />
     <Compile Include="Assets\OBJImport\TextureLoader\ImageUtils.cs" />
     <Compile Include="Assets\TriLib\TriLibUniversalRP\Scripts\Mappers\UniversalRPMaterialMapper.cs" />
@@ -170,6 +170,7 @@
     <Compile Include="Assets\TriLib\TriLibStandaloneFileBrowser\StandaloneFileBrowser\StandaloneFileBrowserWebGL.cs" />
     <Compile Include="Assets\TriLib\TriLibCore\Scripts\Mappers\ByNameHumanoidAvatarMapper.cs" />
     <Compile Include="Assets\TriLib\TriLibSamples\LoadModelFromFile\Scripts\LoadModelFromFileSample.cs" />
+    <Compile Include="Assets\FingersLite\Demo\Test.cs" />
     <Compile Include="Assets\OBJImport\TextureLoader\ImageLoaderHelper.cs" />
     <Compile Include="Assets\TriLib\TriLibSamples\AssetViewer\Scripts\AssetViewer.cs" />
     <Compile Include="Assets\OBJImport\StringExtensions.cs" />
