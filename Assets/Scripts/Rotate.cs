@@ -28,11 +28,13 @@ public class Rotate : MonoBehaviour, IDragHandler
             zoom(difference);
             
         }
-          else  if (Input.GetMouseButtonDown(0))
+         // else  if (Input.GetMouseButtonDown(0))
+          else  if (Input.touchCount ==1 && Input.GetTouch(0).phase == TouchPhase.Began)
          {
                  previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
            }
-            else if (Input.GetMouseButton(0))
+            else if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
+           // else if (Input.GetMouseButton(0))
               {
             rotate();
           }

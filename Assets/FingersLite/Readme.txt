@@ -2,13 +2,13 @@ Fingers Lite, by Jeff Johnson
 Fingers Lite (c) 2018 Digital Ruby, LLC
 http://www.digitalruby.com/Unity-Plugins
 
-Version 2.6.1
+Version 2.6.0.
 
 See ChangeLog.txt for history. Source code available on github: https://github.com/DigitalRuby/FingersGestures.
 
-Upgrade to Fingers full version today at https://u3d.as/hKg?aid=1011lGnL
+Upgrade to Fingers full version today at https://www.assetstore.unity3d.com/en/#!/content/41076?aid=1011lGnL
 
-License: Source code may be used in personal and professional projects. Source code may NOT be redistributed or sold.
+License: Source code may be used in personal and professional projects. Source code may NOT be redistributed or sold. See License.txt for full details.
 
 --------------------
 Fingers Lite is a free version of Fingers - Touch Gestures for Unity.
@@ -29,7 +29,7 @@ Upgrade to the full Fingers Gestures today and get:
 - Show touch circles
 - + MORE!
 
-Upgrade to Fingers full version today at https://u3d.as/hKg?aid=1011lGnL
+Upgrade to Fingers full version today at https://www.assetstore.unity3d.com/en/#!/content/41076?aid=1011lGnL
 --------------------
 
 Introduction
@@ -44,8 +44,7 @@ Instructions
 --------------------
 To get started, perform the following:
 - Drag FingersScript from project view into an object in the hierarchy.
-- Make a script to create and use gestures.
-- Call DontDestroyOnLoad if you want the fingers script game object to persist between scene loads.
+- Create and use some gestures!
 - See the DemoScene (DemoScript.cs) for an example of all the gestures.
 
 Fingers script has these properties:
@@ -97,7 +96,7 @@ A: Most likely you need to set the platform specific view on the gesture. You ca
 
 Thank you.
 
-Upgrade to Fingers full version today at https://u3d.as/hKg?aid=1011lGnL
+Upgrade to Fingers full version today at https://www.assetstore.unity3d.com/en/#!/content/41076?aid=1011lGnL
 
 - Jeff Johnson, creator of Fingers - Gestures for Unity
 http://www.digitalruby.com/Unity-Plugins

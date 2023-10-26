@@ -1,10 +1,12 @@
 ﻿//
-// Fingers Gestures
+// Fingers Lite Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
 // Source code may be used for personal or commercial projects.
 // Source code may NOT be redistributed or sold.
+// Please see license.txt file
 // 
+
 
 using System;
 
@@ -79,12 +81,6 @@ namespace DigitalRubyShared
             }
         }
 
-        public override void Reset()
-        {
-            base.Reset();
-            ScaleMultiplier = ScaleMultiplierX = ScaleMultiplierY = 1.0f;
-        }
-
         /// <summary>
         /// The current scale multiplier. Multiply your current scale value by this to scale.
         /// </summary>
@@ -92,13 +88,13 @@ namespace DigitalRubyShared
         public float ScaleMultiplier { get; private set; }
 
         /// <summary>
-        /// The current scale multiplier on x axis. Multiply your current x scale value by this to scale.
+        /// The current scale multiplier. Multiply your current x scale value by this to scale.
         /// </summary>
         /// <value>The scale multiplier.</value>
         public float ScaleMultiplierX { get; private set; }
 
         /// <summary>
-        /// The current scale multiplier on y axis. Multiply your current y scale value by this to scale.
+        /// The current scale multiplier. Multiply your current y scale value by this to scale.
         /// </summary>
         /// <value>The scale multiplier.</value>
         public float ScaleMultiplierY { get; private set; }

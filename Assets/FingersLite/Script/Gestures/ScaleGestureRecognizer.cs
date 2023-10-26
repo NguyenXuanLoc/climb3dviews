@@ -1,10 +1,12 @@
 ﻿//
-// Fingers Gestures
+// Fingers Lite Gestures
 // (c) 2015 Digital Ruby, LLC
 // http://www.digitalruby.com
 // Source code may be used for personal or commercial projects.
 // Source code may NOT be redistributed or sold.
+// Please see license.txt file
 // 
+
 
 using System;
 
@@ -39,17 +41,7 @@ namespace DigitalRubyShared
         public ScaleGestureRecognizer()
         {
             ScaleMultiplier = ScaleMultiplierX = ScaleMultiplierY = 1.0f;
-
-#if UNITY_2017_4_OR_NEWER
-
-            ZoomSpeed = (UnityEngine.Input.mousePresent ? 3.0f : 1.0f);
-
-#else
-
-            ZoomSpeed = 1.0f;
-
-#endif
-
+            ZoomSpeed = 3.0f;
             ThresholdUnits = 0.15f;
             MinimumNumberOfTouchesToTrack = MaximumNumberOfTouchesToTrack = 2;
             timer.Start();
@@ -148,7 +140,7 @@ namespace DigitalRubyShared
                         timer.Reset();
                         timer.Start();
                         float newDistanceDirection = (currentDistanceSquared - previousDistanceSquared >= 0.0f ? 1.0f : -1.0f);
-                        if (previousDistanceDirection == 0 || newDistanceDirection == previousDistanceDirection)
+                        if (newDistanceDirection == previousDistanceDirection)
                         {
                             ScaleMultiplier = GetScale(distance / previousDistance);
                             ScaleMultiplierX = GetScale(distanceX / previousDistanceX);
@@ -158,8 +150,8 @@ namespace DigitalRubyShared
                         else
                         {
                             ScaleMultiplier = ScaleMultiplierX = ScaleMultiplierY = 1.0f;
+                            previousDistanceDirection = newDistanceDirection;
                         }
-                        previousDistanceDirection = newDistanceDirection;
                         SetPreviousDistance(distance, distanceX, distanceY);
                     }
                     else if (timer.ElapsedMilliseconds > resetDirectionMilliseconds)
@@ -228,25 +220,6 @@ namespace DigitalRubyShared
         /// </summary>
         /// <value>The zoom speed.</value>
         public float ZoomSpeed { get; set; }
-
-        /// <summary>
-        /// Get the current scale speed in a range of -1 to 1 with ZoomSpeed applied
-        /// </summary>
-        public float ScaleMultiplierRange
-        {
-            get
-            {
-                if (ScaleMultiplier > 1.0f)
-                {
-                    return (ScaleMultiplier * ZoomSpeed);
-                }
-                else if (ScaleMultiplier < 1.0f)
-                {
-                    return ((-1.0f / ScaleMultiplier) * ZoomSpeed);
-                }
-                return 0.0f;
-            }
-        }
 
         /// <summary>
         /// How many units the distance between the fingers must increase or decrease from the start distance to begin executing. Default is 0.15.

@@ -11,15 +11,15 @@ public class ViewDrag : MonoBehaviour
     {
         if (Input.touchCount == 2) touchCount = 2;
         if (Utils.isJoyStick || Utils.isRotate || Input.touchCount == 2 || Utils.isTwoTouch) return;
-        if (Input.GetMouseButtonDown(0) || touchCount ==2)
+        if (Input.touchCount ==1 && Input.GetTouch(0).phase  == TouchPhase.Began|| touchCount ==2)
         {
             OnMouseDown(); 
-            touchCount = 0;
+            touchCount = 0; 
         } 
-        if (Input.GetMouseButton(0))
+        if (Input.touchCount == 1 && Input.GetTouch(0).phase == TouchPhase.Moved)
         {
             OnMouseDrag();
-        }
+        } 
     }
 
     void OnMouseDown()

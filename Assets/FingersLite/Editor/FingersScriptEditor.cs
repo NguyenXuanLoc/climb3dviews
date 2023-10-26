@@ -39,7 +39,7 @@ namespace DigitalRubyShared
                 GUI.DrawTexture(r, logo, ScaleMode.StretchToFill);
                 if (GUI.Button(r, "", new GUIStyle()))
                 {
-                    Application.OpenURL("https://u3d.as/hKg?aid=1011lGnL");
+                    Application.OpenURL("https://www.assetstore.unity3d.com/en/#!/content/41076?aid=1011lGnL");
                 }
                 EditorGUILayout.Separator();
             }

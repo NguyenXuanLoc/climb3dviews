@@ -50,9 +50,8 @@ public class Grid : MonoBehaviour
     }
     private float getRotation(int rotation)
     {  
-        return rotation;
+        return rotation; 
         if(rotation!=0)
-        print("TAG rotation: " + rotation);
         switch (rotation)
         { 
             case 0: return 0;
@@ -66,7 +65,7 @@ public class Grid : MonoBehaviour
             default: return 0;
         }
     } 
-
+ 
     private GameObject getHoldById(string id)
     { 
         for(int i = 0; i < lHoldSet.Count; i++)
@@ -75,12 +74,10 @@ public class Grid : MonoBehaviour
             {
                 return lHoldSet[0];
             }    
-            //print("TAG ID: "+ id + ("cube" + (int.Parse(id) - 1).ToString()));
             if (lHoldSet[i].gameObject.name==("cube" + (int.Parse(id)).ToString()).ToString()) 
             {    
                 try 
                 {
-                    print("TAG HOLDSET: " + lHoldSet[i].gameObject.name);
                     return lHoldSet[i];
                 } 
                 catch(Exception e) 
