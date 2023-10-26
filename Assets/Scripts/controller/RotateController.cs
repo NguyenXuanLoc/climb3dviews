@@ -1,3 +1,4 @@
+using DigitalRubyShared;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,25 +9,38 @@ public class RotateController : MonoBehaviour
     [SerializeField] private Camera cam;
     [SerializeField] private Transform target;
     [SerializeField] private float distanceToTarget = 10;
+    [SerializeField] public GameObject Eatch;
+    [SerializeField] private RotateGestureRecognizer rotateGesture;
 
     private Vector3 previousPosition;
-    bool isMax = false;
 
+    private void RotateGestureCallback(GestureRecognizer gesture)
+    {
+        if (gesture.State == GestureRecognizerState.Executing)
+        {
+            Eatch.transform.Rotate(0.0f, 0.0f, rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg);
+        } 
+    }
+
+    private void CreateRotateGesture()
+    {
+        rotateGesture = new RotateGestureRecognizer();
+        rotateGesture.StateUpdated += RotateGestureCallback;
+        FingersScript.Instance.AddGesture(rotateGesture);
+    }
+
+    private void Start()
+    {
+
+        CreateRotateGesture();
+    }
     private void Update()
     {
-        if(Input.touchCount == 2 && ((Input.GetTouch(0).phase == TouchPhase.Began) || (Input.GetTouch(1).phase == TouchPhase.Began)))
+        if(Input.touchCount == 2 && ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began) || (Input.GetTouch(1).phase == UnityEngine.TouchPhase.Began)))
         {
             previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
         }
-       /* if (Input.GetMouseButtonDown(0))
-        {  
-            previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
-        }
-        else if (Input.GetMouseButtonDown(1))
-        {
-            previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
-        }*/ 
-        else if (/*Input.GetMouseButton(0) &&*/ Input.touchCount == 2 && (Input.GetTouch(0).phase == TouchPhase.Moved || Input.GetTouch(1).phase == TouchPhase.Moved))
+        else if (Input.touchCount == 2 && (Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved || Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved))
         {
             Utils.setRotate(true);
             Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);
@@ -71,7 +85,7 @@ public class RotateController : MonoBehaviour
                     {
                         target.transform.localEulerAngles = new Vector3(target.transform.eulerAngles.x, 90, target.transform.eulerAngles.z);
                     }
-                } 
+                }  
             }
             else if (direction.x < 0) //SWIPE RIGHT  
             {
