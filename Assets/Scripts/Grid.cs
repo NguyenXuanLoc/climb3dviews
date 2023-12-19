@@ -18,7 +18,7 @@ public class Grid : MonoBehaviour
     private void Start()
     {
         Utils.setFieldOfView(camera.fieldOfView);
-        /*return;*/ 
+        /*return;*/
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
     }
@@ -31,16 +31,27 @@ public class Grid : MonoBehaviour
         Utils.setHeightOfWall(int.Parse(gridData.Data.Height.ToString()));
         setFocusPosition(int.Parse(gridData.Data.Height.ToString()));
         Hold[][] hold = Newtonsoft.Json.JsonConvert.DeserializeObject<Hold[][]>(gridData.Data.Holds);
+
         for (int d = 0; d < hold.Length; d++)
         {
             for (int l = 0; l < hold[d].Length; l++)
-            { 
-     
-                var gameOb = Instantiate(getHoldById(hold[d][l].type), 
-                         new Vector3(l, d), Quaternion.identity); 
-                gameOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation)));
-                gameOb.transform.parent = transform;
-                lObject.Add(gameOb); 
+            {
+                //ADD BACKDROUND 
+                var backgroundOb = Instantiate(lHoldSet[0],new Vector3(l, d), Quaternion.identity);
+                backgroundOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation)));
+                backgroundOb.transform.parent = transform;
+                lObject.Add(backgroundOb);
+
+                //ADD HOLD SET
+                if (hold[d][l].type != "Empty")
+                { 
+                    var gameOb = Instantiate(getHoldById(hold[d][l].type),
+                             new Vector3(l, d), Quaternion.identity);
+                    gameOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation))); 
+                    gameOb.transform.position = new Vector3(gameOb.transform.position.x,gameOb.transform.position.y, -0.2f);
+                    gameOb.transform.parent = transform;
+                    lObject.Add(gameOb);
+                }
             }
         }
         height = gridData.Data.Height;
@@ -64,17 +75,18 @@ public class Grid : MonoBehaviour
             case -3: return 270;
             default: return 0;
         }
-    } 
- 
+    }
+
     private GameObject getHoldById(string id)
-    { 
-        for(int i = 0; i < lHoldSet.Count; i++)
+    {
+        if (id.Length == 1) id = "0"+id;
+        for (int i = 0; i < lHoldSet.Count; i++)
         {
             if (id.Equals("Empty"))
             {
                 return lHoldSet[0];
-            }    
-            if (lHoldSet[i].gameObject.name==("cube" + (int.Parse(id)).ToString()).ToString()) 
+            }
+            if (lHoldSet[i].gameObject.name==(id).ToString()) 
             {    
                 try 
                 {
