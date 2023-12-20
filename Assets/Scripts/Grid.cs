@@ -16,9 +16,9 @@ public class Grid : MonoBehaviour
     long height = 0;
     float positionY = 0;
     private void Start()
-    {
+    { 
         Utils.setFieldOfView(camera.fieldOfView);
-        /*return;*/
+      /*  return;*/
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
     }
@@ -106,18 +106,18 @@ public class Grid : MonoBehaviour
         bool isAndroid = (Application.platform == RuntimePlatform.Android);
         switch (height) 
         {  
-            case 1: return new Vector3(Utils.x, 28, -50); 
-            case 2: return new Vector3(Utils.x, 28, -50); 
-            case 3: return new Vector3(Utils.x, 28, -50); 
-            case 4: return new Vector3(Utils.x, 28, -50); 
-            case 5: return new Vector3(Utils.x, 28, -50); 
-            case 6: return new Vector3(Utils.x, isAndroid ?30 :27, -50);
-            case 7: return new Vector3(Utils.x, isAndroid ?30 :27, -50);
-            case 8: return new Vector3(Utils.x, isAndroid ?30 :27, -50);
-            case 9: return new Vector3(5, isAndroid ? 30 : 27, -50);    
-            case 10: return new Vector3(5, isAndroid ? 30 : 27, -50);    
-            case 11: return new Vector3(5, isAndroid ? 30 : 27, -50);    
-            case 12: return new Vector3(5, isAndroid ? 35 :32, -55);     
+            case 1: return new Vector3(Utils.x, 28, -20); 
+            case 2: return new Vector3(Utils.x, 28, -20); 
+            case 3: return new Vector3(Utils.x, 28, -20); 
+            case 4: return new Vector3(Utils.x, 28, -20); 
+            case 5: return new Vector3(Utils.x, 28, -20); 
+            case 6: return new Vector3(Utils.x, isAndroid ?30 :27, -20);
+            case 7: return new Vector3(Utils.x, isAndroid ?30 :27, -20);
+            case 8: return new Vector3(Utils.x, isAndroid ?30 :27, -20);
+            case 9: return new Vector3(5, isAndroid ? 30 : 27, -20);    
+            case 10: return new Vector3(5, isAndroid ? 30 : 27, -20);    
+            case 11: return new Vector3(5, isAndroid ? 30 : 27, -20);    
+            case 12: return new Vector3(5, isAndroid ? 35 :32, -20);     
             default: return new Vector3(Utils.x, Utils.y, -30); 
         } 
     }

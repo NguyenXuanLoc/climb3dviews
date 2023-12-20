@@ -14,11 +14,26 @@ public class RotateController : MonoBehaviour
 
     private Vector3 previousPosition;
 
+    private Vector2 touch0StartPos;
+    private Vector2 touch0EndPos;
+
+    private Vector2 touch1StartPos;
+    private Vector2 touch1EndPos;
+
+    private int direction0;
+    private int direction1;
+
     private void RotateGestureCallback(GestureRecognizer gesture)
     {
+        print("TAG gesture.State" + gesture.State);
         if (gesture.State == GestureRecognizerState.Executing)
         {
+            Utils.isAround = true;
             Eatch.transform.Rotate(0.0f, 0.0f, rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg);
+        }
+        else
+        {
+            Utils.isAround = false;
         } 
     }
 
@@ -36,6 +51,8 @@ public class RotateController : MonoBehaviour
     }
     private void Update()
     {
+      
+
         if(Input.touchCount == 2 && ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began) || (Input.GetTouch(1).phase == UnityEngine.TouchPhase.Began)))
         {
             previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
@@ -47,7 +64,9 @@ public class RotateController : MonoBehaviour
             Vector3 direction = previousPosition - newPosition;
             float rotationAroundYAxis = direction.x * 180; // camera moves horizontally
             float rotationAroundXAxis = -direction.y * 180; // camera moves vertically
-            
+
+
+
             if (direction.y < 0) //SWIPE BOTTOM
             {
                 if ((getXAxis() >= 0 && getXAxis() < 90) || (getXAxis() > 250 && getXAxis() <= 360))
@@ -111,6 +130,45 @@ public class RotateController : MonoBehaviour
             Utils.setTwoTouch(false);
         }
     }
+
+
+    void DetectSwipe()
+    {
+        var touch0 = Input.GetTouch(0);
+        if (touch0.phase == UnityEngine.TouchPhase.Began)
+        {
+            touch0StartPos = touch0.position;
+        }
+        else if (touch0.phase == UnityEngine.TouchPhase.Moved)
+        {
+            touch0EndPos = touch0.position;
+            Vector2 swipeDirection = touch0EndPos - touch0StartPos;
+            if (swipeDirection.magnitude > 20f) // Adjust the threshold as needed
+            {
+                direction0 = Utils.getDirection(swipeDirection);
+                touch0StartPos = touch0.position;
+            }
+        }
+
+
+        var touch1 = Input.GetTouch(1);
+        if (touch1.phase == UnityEngine.TouchPhase.Began)
+        {
+            touch1StartPos = touch1.position;
+        }
+        else if (touch1.phase == UnityEngine.TouchPhase.Moved)
+        {
+            touch1EndPos = touch1.position;
+            Vector2 swipeDirection = touch1EndPos - touch1StartPos;
+            if (swipeDirection.magnitude > 20f) // Adjust the threshold as needed
+            {
+                direction1 = Utils.getDirection(swipeDirection);
+                touch1StartPos = touch1.position;
+            }
+        }
+    }
+
+
     int getYAxis()
     {
         return Convert.ToInt32(target.transform.rotation.eulerAngles.y);

@@ -11,6 +11,7 @@ public class ToggleController : MonoBehaviour
     void Start()
     {
         selectedToggle.onValueChanged.AddListener(delegate {
+            print("TAG selectedToggle" + selectedToggle);
             ToggleValueChangedOccured(selectedToggle);
         });
          

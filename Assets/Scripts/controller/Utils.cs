@@ -12,11 +12,12 @@ public class Utils {
    public static float focalLenght = 50f;
    public static float rotationAroundYAxis = 0f;
    public static float rotationAroundXAxis = 0;
-    public static float positionYBox = 0f;
-    public static float fieldOfView = 0f;
+   public static float positionYBox = 0f;
+   public static float fieldOfView = 0f;
    public static bool isResetGrid = false;
    public static bool isTwoTouch;
    public static int heightOfWall = 0;
+   public static bool isAround = false;
 
  
 
@@ -106,4 +107,33 @@ public class Utils {
     {
         y = value;
     }
+
+    public static int getDirection(Vector2 swipeDirection)
+    {
+        if (Mathf.Abs(swipeDirection.x) > Mathf.Abs(swipeDirection.y))
+        {
+            if (swipeDirection.x > 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return 2;
+            }
+        }
+        else // Vertical swipe
+        {
+            if (swipeDirection.y > 0)
+            {
+                return 3;
+            }
+            else
+            {
+                return 4;
+            }
+        }
+
+        return 0;
+    }
+
 }
