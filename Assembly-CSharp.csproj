@@ -119,6 +119,7 @@
     <Compile Include="Assets\Scripts\Wall_Controller.cs" />
     <Compile Include="Assets\FingersLite\Script\Gestures\DeviceInfo.cs" />
     <Compile Include="Assets\TriLib\TriLibCore\Scripts\TextureLoader.cs" />
+    <Compile Include="Assets\Scripts\controller\PinchZoom.cs" />
     <Compile Include="Assets\TriLib\TriLibStandaloneFileBrowser\StandaloneFileBrowser\StandaloneFileBrowserWinRT.cs" />
     <Compile Include="Assets\OBJImport\TextureLoader\ImageUtils.cs" />
     <Compile Include="Assets\TriLib\TriLibUniversalRP\Scripts\Mappers\UniversalRPMaterialMapper.cs" />

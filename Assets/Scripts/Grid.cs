@@ -15,10 +15,11 @@ public class Grid : MonoBehaviour
     float currentRotationAroundYAxis; 
     long height = 0;
     float positionY = 0;
+    Vector3 refreshScale = new Vector3(0, 0, 0);
     private void Start()
     {
         Utils.setFieldOfView(camera.fieldOfView);
-        /*return;*/
+        return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
     }
@@ -140,7 +141,7 @@ public class Grid : MonoBehaviour
             case 12: return -1.9f; 
             default: return -2f;
 
-        }
+        } 
     }                
 
 
@@ -153,7 +154,9 @@ public class Grid : MonoBehaviour
         { 
             currentRotationAroundYAxis = Utils.rotationAroundYAxis;
         }
-    } 
+         if(refreshScale.x ==0)
+         refreshScale = wallObject.transform.localScale;
+    }
 
 
     void refreshUI()
@@ -165,8 +168,10 @@ public class Grid : MonoBehaviour
         Vector3 moveGrid = new Vector3(5.63f,getDefaultPositionBox(height), 0);
         wallObject.transform.position = moveGrid;
         wallObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        wallObject.transform.localScale = refreshScale;
+        refreshScale = new Vector3(0, 0, 0);
     }
-     
+
     float getDefaultPositionBox(long height)
     {
         switch (height)
