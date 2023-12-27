@@ -62,7 +62,7 @@ namespace Lean.Touch
 			Use.UpdateRequiredSelectable(gameObject);
 		}
 		Vector3 refreshPosition = new Vector3(0,0,0);
-		float MAXSCALE = 250;
+		float MAXSCALE = 150;
 		float MINSCALE = 10;
 		protected virtual void Update()
 		{
@@ -78,6 +78,16 @@ namespace Lean.Touch
 			// Get the fingers we want to use
 			var fingers = Use.UpdateAndGetFingers();
 
+			if (Input.touchCount >= 2)
+			{
+				var first = Input.GetTouch(0).position;
+				var second = Input.GetTouch(1).position;
+				float distance = Vector3.Distance(first, second);
+				if (distance < 300)
+				{
+					return;
+				}
+			}
 			// Calculate pinch scale, and make sure it's valid
 			var pinchScale = LeanGesture.GetPinchScale(fingers);
 

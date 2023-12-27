@@ -3,7 +3,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+enum SWIPE
+{
+    LEFT,RIGHT,TOP,BOTTOM
+}
 public class RotateController : MonoBehaviour
 {
     [SerializeField] private Camera cam;
@@ -18,8 +21,17 @@ public class RotateController : MonoBehaviour
     {
         if (gesture.State == GestureRecognizerState.Executing)
         {
-            Eatch.transform.Rotate(0.0f, 0.0f, rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg);
-        } 
+            if (Input.touchCount >= 2)
+            {
+                var first = Input.GetTouch(0).position;
+                var second = Input.GetTouch(1).position;
+                float distance = Vector3.Distance(first, second);
+                if (distance > 250)
+                {
+                    Eatch.transform.Rotate(0.0f, 0.0f, rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg);
+                }
+            }
+        }
     }
 
     private void CreateRotateGesture()
@@ -31,73 +43,63 @@ public class RotateController : MonoBehaviour
 
     private void Start()
     {
-
         CreateRotateGesture();
     }
+    SWIPE swipe;
+    float maxBottom = 0;
+    float maxTop = 0;
     private void Update()
     {
-        if(Input.touchCount == 2 && ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began) || (Input.GetTouch(1).phase == UnityEngine.TouchPhase.Began)))
+        print("TAG getXAxis(): " + maxTop+ "maxTop: " + maxTop);
+        if (Input.touchCount == 2 && ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began) || (Input.GetTouch(1).phase == UnityEngine.TouchPhase.Began)))
         {
-            previousPosition = cam.ScreenToViewportPoint(Input.mousePosition);
+            previousPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
         }
-        else if (Input.touchCount == 2 && (Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved || Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved))
+        else if (Input.touchCount == 2 && (Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved && Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved))
         {
             Utils.setRotate(true);
-            Vector3 newPosition = cam.ScreenToViewportPoint(Input.mousePosition);
+            Vector3 newPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
             Vector3 direction = previousPosition - newPosition;
             float rotationAroundYAxis = direction.x * 180; // camera moves horizontally
             float rotationAroundXAxis = -direction.y * 180; // camera moves vertically
-            
+
             if (direction.y < 0) //SWIPE BOTTOM
             {
-                if ((getXAxis() >= 0 && getXAxis() < 90) || (getXAxis() > 250 && getXAxis() <= 360))
+                if (getXAxis() < 0.7)
                 {
-                    target.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
+                   target.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
                     previousPosition = newPosition;
-                    if (getXAxis() >= 90 && !(getXAxis() >= 270 && getXAxis() <= 360))
-                    { 
-                        target.transform.localEulerAngles = new Vector3(90, target.transform.eulerAngles.y, target.transform.eulerAngles.z);
-                    }
                 }
-            } 
+            }
 
             else if (direction.y > 0) //SWIPE TOP
             {
-                if (getXAxis() <= 90 || (getXAxis() > 270 && getXAxis() <= 360))
+                if (getXAxis() > -0.7)
                 {
                     target.transform.Rotate(new Vector3(1, 0, 0), rotationAroundXAxis);
                     previousPosition = newPosition;
-                    if (getXAxis() <= 270 && !(getXAxis() >= 0 && getXAxis() <= 90))
-                    {
-                        target.transform.localEulerAngles = new Vector3(270, target.transform.eulerAngles.y, target.transform.eulerAngles.z);
-                    }
                 }
+            }
 
-            }  
-             
             if (direction.x > 0) //SWIPE LEFT
             {
-                if ((getYAxis() >= 0 && getYAxis() <= 90) || (getYAxis() >= 250 && getYAxis() <= 360))
+               print("TAG SET SWIPE LEFT: " + getYAxis());
+                if (getYAxis()<0.7)
                 {
                     target.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
                     previousPosition = newPosition;
-                    if (getYAxis() > 90 && !(getYAxis() >= 270 && getYAxis() <= 360))
-                    {
-                        target.transform.localEulerAngles = new Vector3(target.transform.eulerAngles.x, 90, target.transform.eulerAngles.z);
-                    }
-                }  
-            }
+                } 
+               
+            } 
             else if (direction.x < 0) //SWIPE RIGHT  
             {
-                if (getYAxis() <= 90 || (getYAxis() > 270 && getYAxis() <= 360))
+              print("TAG SET SWIPE RIGHT: " + getYAxis());
+                if (getYAxis()>-0.7)
                 {
                     target.transform.Rotate(new Vector3(0, 1, 0), rotationAroundYAxis, Space.World);
                     previousPosition = newPosition;
                 }
-                if (getYAxis() <= 270 && !(getYAxis() >= 0 && getYAxis() <= 90))
-                {
-                    target.transform.localEulerAngles = new Vector3(target.transform.eulerAngles.x, 270, target.transform.eulerAngles.z);
-                }
+
             }
 
 
@@ -111,13 +113,29 @@ public class RotateController : MonoBehaviour
             Utils.setTwoTouch(false);
         }
     }
-    int getYAxis()
+    private static float WrapAngle(float angle)
     {
-        return Convert.ToInt32(target.transform.rotation.eulerAngles.y);
+        angle %= 360;
+        var result = angle - 360;
+        if (angle == -80) print("TAG RESULT: " + result);
+        if (angle > 180)
+            return angle - 360;
+        result = angle - 360; ;
+        if (angle == -80) print("TAG RESULT: " + result);
+        return angle;
     }
-    int getXAxis()
-    { 
-        return Convert.ToInt32(target.transform.rotation.eulerAngles.z);
+
+    float getYAxis()
+    {
+        return target.transform.localRotation.y;
+      //  return target.transform.rotation.eulerAngles.y;
+      //  return Convert.ToInt32(target.transform.rotation.eulerAngles.y);
+    }
+    float getXAxis()
+    {
+        return target.transform.localRotation.x;
+     //   return target.transform.rotation.eulerAngles.x;
+     //   return Convert.ToInt32(target.transform.rotation.eulerAngles.z);
     }
 
 }
