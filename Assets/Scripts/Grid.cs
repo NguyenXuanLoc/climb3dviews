@@ -49,7 +49,7 @@ public class Grid : MonoBehaviour
                     var gameOb = Instantiate(getHoldById(hold[d][l].type),
                              new Vector3(l, d), Quaternion.identity);
                     gameOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation))); 
-                    gameOb.transform.position = new Vector3(gameOb.transform.position.x,gameOb.transform.position.y, -0.1f);
+                    gameOb.transform.position = new Vector3(gameOb.transform.position.x,gameOb.transform.position.y, -0.06f);
                     gameOb.transform.parent = transform;
                     lObject.Add(gameOb);
                 }
