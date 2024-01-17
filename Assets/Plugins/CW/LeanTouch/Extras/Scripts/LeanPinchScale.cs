@@ -106,6 +106,7 @@ namespace Lean.Touch
 					}
 					else
 					{
+						if (transform.localScale.x>MINSCALE && transform.localScale.x < MAXSCALE)
 						Translate(pinchScale, pinchScreenCenter);
 					}
 				}

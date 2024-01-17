@@ -16,8 +16,8 @@ public class RotateController : MonoBehaviour
     [SerializeField] private RotateGestureRecognizer rotateGesture;
 
     private Quaternion quaternion;
-    float max = 90;
-    float min = -90;
+    float max = 89;
+    float min = -89;
     private Vector3 previousPosition;
     private float rotationZ = 0;
     private void RotateGestureCallback(GestureRecognizer gesture)
@@ -33,9 +33,8 @@ public class RotateController : MonoBehaviour
                 {
                     rotationZ = rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg;
                     quaternion.z += rotationZ;
-                    Eatch.transform.localRotation = Quaternion.Euler(quaternion.x, quaternion.y, quaternion.z);
                 }
-            } 
+            }
         }
     }
 
@@ -59,7 +58,7 @@ public class RotateController : MonoBehaviour
         }
         else if (Input.touchCount == 2 && (Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved && Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved))
         {
-            Utils.setRotate(true); 
+            Utils.setRotate(true);
             Vector3 newPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
             Vector3 direction = previousPosition - newPosition;
             float rotationAroundYAxis = direction.x * 180;  // camera moves horizontally
@@ -71,7 +70,7 @@ public class RotateController : MonoBehaviour
             quaternion.y = Mathf.Clamp(quaternion.y, min,max);
             target.transform.localRotation = Quaternion.Euler(quaternion.x, quaternion.y, quaternion.z);
             previousPosition = newPosition;
-        } 
+        }
         else
         {
             Utils.setRotate(false);
