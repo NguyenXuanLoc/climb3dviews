@@ -17,10 +17,14 @@ public class Utils {
    public static bool isResetGrid = false;
    public static bool isTwoTouch;
    public static int heightOfWall = 0;
+   public static Quaternion quaternion;
 
- 
 
 
+    public static void resetQuaternion()
+    {
+        quaternion = new Quaternion(0,0,0,0);
+    }
     public static void setDefaultPositionYBox(float y)
     { 
         positionYBox = y; 

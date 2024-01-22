@@ -19,7 +19,7 @@ public class Grid : MonoBehaviour
     private void Start()
     {
         Utils.setFieldOfView(camera.fieldOfView);
-        return;
+        /*return;*/
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);      
     }
@@ -45,7 +45,7 @@ public class Grid : MonoBehaviour
 
                 //ADD HOLD SET
                 if (hold[d][l].type != "Empty")
-                { 
+                {
                     var gameOb = Instantiate(getHoldById(hold[d][l].type),
                              new Vector3(l, d), Quaternion.identity);
                     gameOb.transform.Rotate(new Vector3(0, 180, getRotation(hold[d][l].rotation))); 
@@ -129,7 +129,7 @@ public class Grid : MonoBehaviour
         {
             case 1: return -17f;   
             case 2: return -9.5f;    
-            case 3: return -4.2f;
+            case 3: return -5.2f;
             case 4: return -4.2f;   
             case 5: return -4.2f;   
             case 6: return -4f;   
@@ -170,6 +170,7 @@ public class Grid : MonoBehaviour
         wallObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         wallObject.transform.localScale = refreshScale;
         refreshScale = new Vector3(0, 0, 0);
+        Utils.resetQuaternion();
     }
 
     float getDefaultPositionBox(long height)

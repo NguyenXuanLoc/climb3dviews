@@ -99,7 +99,7 @@ public class Box : MonoBehaviour
         {      
             case 1: return -1.33f;        
             case 2: return -1.4f;      
-            case 3: return -1.7f;     
+            case 3: return -1.7f;
             case 4: return -1.5f;     
             case 5: return -1.1f;      
             case 6: return -0.5f;    

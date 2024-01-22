@@ -15,7 +15,6 @@ public class RotateController : MonoBehaviour
     [SerializeField] public GameObject Eatch;
     [SerializeField] private RotateGestureRecognizer rotateGesture;
 
-    private Quaternion quaternion;
     float max = 89;
     float min = -89;
     private Vector3 previousPosition;
@@ -24,15 +23,16 @@ public class RotateController : MonoBehaviour
     {
         if (gesture.State == GestureRecognizerState.Executing)
         {
-            if (Input.touchCount >= 2)
-            {
+            if (Input.touchCount >= 2 && Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved && Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved)
+            { 
                 var first = Input.GetTouch(0).position;
                 var second = Input.GetTouch(1).position;
                 float distance = Vector3.Distance(first, second);
                 if (distance > 250)
                 {
                     rotationZ = rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg;
-                    quaternion.z += rotationZ;
+                    Utils.quaternion.z += rotationZ;
+                    Eatch.transform.Rotate(0.0f, 0.0f, rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg);
                 }
             }
         }
@@ -51,7 +51,7 @@ public class RotateController : MonoBehaviour
     }
 
     private void Update()
-    { 
+    {
         if (Input.touchCount == 2 && ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began) || (Input.GetTouch(1).phase == UnityEngine.TouchPhase.Began)))
         {
             previousPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
@@ -61,15 +61,21 @@ public class RotateController : MonoBehaviour
             Utils.setRotate(true);
             Vector3 newPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
             Vector3 direction = previousPosition - newPosition;
-            float rotationAroundYAxis = direction.x * 180;  // camera moves horizontally
-            float rotationAroundXAxis = -direction.y * 180; // camera moves vertically
+            float distance = Vector3.Distance(newPosition, previousPosition);
+            if (distance > 0.01)
+            {
+               // print("TAG distance:" + distance);
+                float rotationAroundYAxis = direction.x * 180;  // camera moves horizontally
+                float rotationAroundXAxis = -direction.y * 180; // camera moves vertically
 
-            quaternion.x += rotationAroundXAxis * 0.9f;
-            quaternion.y += rotationAroundYAxis * 0.9f;
-            quaternion.x = Mathf.Clamp(quaternion.x, min,max);
-            quaternion.y = Mathf.Clamp(quaternion.y, min,max);
-            target.transform.localRotation = Quaternion.Euler(quaternion.x, quaternion.y, quaternion.z);
-            previousPosition = newPosition;
+                Utils.quaternion.x += rotationAroundXAxis * 0.9f;
+                Utils.quaternion.y += rotationAroundYAxis * 0.9f;
+                Utils.quaternion.x = Mathf.Clamp(Utils.quaternion.x, min, max);
+                Utils.quaternion.y = Mathf.Clamp(Utils.quaternion.y, min, max);
+                target.transform.localRotation = Quaternion.Euler(Utils.quaternion.x, Utils.quaternion.y, Utils.quaternion.z);
+                previousPosition = newPosition;
+
+            }
         }
         else
         {
