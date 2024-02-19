@@ -110,4 +110,23 @@ public class Utils {
     {
         y = value;
     }
+     
+    public static bool? AreFingersMovingInSameDirection(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, float threshold = 0.9f)
+    {
+        // Calculate movement vectors
+        Vector2 movementVector1 = endPos1 - startPos1;
+        Vector2 movementVector2 = endPos2 - startPos2;
+
+        // Normalize the movement vectors
+        Vector2 direction1 = movementVector1.normalized;
+        Vector2 direction2 = movementVector2.normalized;
+
+        // Compare directions using the dot product
+        float dotProduct = Vector2.Dot(direction1, direction2);
+        //   print("TAG dotProduct: " + dotProduct);
+        // Check if the dot product is above the threshold
+        if (dotProduct > 0) return true;
+        else if (dotProduct < 0) return false;
+        return null;
+    }
 }

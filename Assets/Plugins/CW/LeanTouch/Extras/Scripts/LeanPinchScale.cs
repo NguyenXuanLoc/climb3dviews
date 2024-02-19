@@ -64,6 +64,10 @@ namespace Lean.Touch
 		Vector3 refreshPosition = new Vector3(0,0,0);
 		float MAXSCALE = 150;
 		float MINSCALE = 10;
+
+		private Vector2 startPos1;
+		private Vector2 startPos2;
+
 		protected virtual void Update()
 		{
 
@@ -77,6 +81,34 @@ namespace Lean.Touch
 
 			// Get the fingers we want to use
 			var fingers = Use.UpdateAndGetFingers();
+
+
+			if (Input.touchCount == 2)
+			{
+				// Check if both touches just began, to set the start positions
+				if (Input.GetTouch(0).phase == TouchPhase.Began || Input.GetTouch(0).phase == TouchPhase.Began)
+				{
+					startPos1 = Input.GetTouch(0).position;
+					startPos2 = Input.GetTouch(1).position;
+				}
+				else if (Input.GetTouch(0).phase == TouchPhase.Moved && Input.GetTouch(1).phase == TouchPhase.Moved)
+				{
+					// Calculate movement vectors based on the current touch position and start position
+					Vector2 endPos1 = Input.GetTouch(0).position;
+					Vector2 endPos2 = Input.GetTouch(1).position;
+
+					bool? sameDirection = AreFingersMovingInSameDirection(startPos1, endPos1, startPos2, endPos2);
+					if (sameDirection == null || sameDirection == true)
+					{
+						return;
+						//   Debug.Log("Fingers moving in the same direction: " + sameDirection);
+					} 
+
+					// Update the start position for continuous tracking
+					startPos1 = Input.GetTouch(0).position;
+					startPos2 = Input.GetTouch(1).position;
+				}
+			}
 
 			if (Input.touchCount >= 2)
 			{
@@ -130,6 +162,25 @@ namespace Lean.Touch
 				}
 			}
 		} 
+
+		    bool? AreFingersMovingInSameDirection(Vector2 startPos1, Vector2 endPos1, Vector2 startPos2, Vector2 endPos2, float threshold = 0.9f)
+    {
+        // Calculate movement vectors
+        Vector2 movementVector1 = endPos1 - startPos1;
+        Vector2 movementVector2 = endPos2 - startPos2;
+
+        // Normalize the movement vectors
+        Vector2 direction1 = movementVector1.normalized;
+        Vector2 direction2 = movementVector2.normalized;
+         
+        // Compare directions using the dot product
+        float dotProduct = Vector2.Dot(direction1, direction2);
+     //   print("TAG dotProduct: " + dotProduct);
+        // Check if the dot product is above the threshold
+        if (dotProduct > 0) return true;
+        else if (dotProduct < 0) return false;
+        return null;
+    }
 
 		protected void zoom(float pinchScale,Vector3 oldScale)
         {
@@ -202,6 +253,7 @@ namespace Lean.Touch
 			}
 		}
 	}
+
 }
 
 #if UNITY_EDITOR

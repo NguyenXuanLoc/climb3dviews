@@ -143,6 +143,7 @@
     <Compile Include="Assets\TriLib\TriLibHDRP\Scripts\Mappers\HDRPMaterialMapper.cs" />
     <Compile Include="Assets\OBJImport\TextureLoader\DDSLoader.cs" />
     <Compile Include="Assets\TriLib\TriLibCore\Scripts\Mappers\LegacyToHumanoidAnimationClipMapper.cs" />
+    <Compile Include="Assets\Scripts\TestRotation.cs" />
     <Compile Include="Assets\TriLib\TriLibStandaloneFileBrowser\StandaloneFileBrowser\StandaloneFileBrowserIOS.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\TriLib\TriLibCore\Scripts\Mappers\ByNameLipSyncMapper.cs" />
