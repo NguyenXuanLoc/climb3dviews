@@ -19,23 +19,27 @@ public class RotateController : MonoBehaviour
     float min = -89;
     private Vector3 previousPosition;
     private float rotationZ = 0;
+
+    private Vector2 startPos1;
+    private Vector2 startPos2;
+    bool? isSameDirection = false;
     private void RotateGestureCallback(GestureRecognizer gesture)
     {
         if (gesture.State == GestureRecognizerState.Executing)
         {
-            if (Input.touchCount >= 2 && Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved && Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved)
+            if (Input.touchCount >= 2 && Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved && Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved && isSameDirection == false)
             { 
-                var first = Input.GetTouch(0).position;
+                var first = Input.GetTouch(0).position; 
                 var second = Input.GetTouch(1).position;
                 float distance = Vector3.Distance(first, second);
                 if (distance > 250)
-                {
+                { 
                     rotationZ = rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg;
                     Utils.quaternion.z += rotationZ;
                     Eatch.transform.Rotate(0.0f, 0.0f, rotateGesture.RotationRadiansDelta * Mathf.Rad2Deg);
                 }
             }
-        }
+        } 
     }
 
     private void CreateRotateGesture()
@@ -52,35 +56,58 @@ public class RotateController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.touchCount == 2 && ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began) || (Input.GetTouch(1).phase == UnityEngine.TouchPhase.Began)))
+        if(Input.touchCount == 2)
         {
-            previousPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
-        }
-        else if (Input.touchCount == 2 && (Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved && Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved))
-        {
-            Utils.setRotate(true);
-            Vector3 newPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
-            Vector3 direction = previousPosition - newPosition;
-            float distance = Vector3.Distance(newPosition, previousPosition);
-            if (distance > 0.01)
+            Touch touch1 = Input.GetTouch(0); // Get the first touch
+            Touch touch2 = Input.GetTouch(1); // Get the second touch
+            if ( ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Began) || (Input.GetTouch(1).phase == UnityEngine.TouchPhase.Began)))
             {
-               // print("TAG distance:" + distance);
-                float rotationAroundYAxis = direction.x * 180;  // camera moves horizontally
-                float rotationAroundXAxis = -direction.y * 180; // camera moves vertically
-
-                Utils.quaternion.x += rotationAroundXAxis * 0.9f;
-                Utils.quaternion.y += rotationAroundYAxis * 0.9f;
-                Utils.quaternion.x = Mathf.Clamp(Utils.quaternion.x, min, max);
-                Utils.quaternion.y = Mathf.Clamp(Utils.quaternion.y, min, max);
-                target.transform.localRotation = Quaternion.Euler(Utils.quaternion.x, Utils.quaternion.y, Utils.quaternion.z);
-                previousPosition = newPosition;
-
+                previousPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
+                startPos1 = touch1.position;
+                startPos2 = touch2.position;
             }
+            else if ((Input.GetTouch(0).phase == UnityEngine.TouchPhase.Moved && Input.GetTouch(1).phase == UnityEngine.TouchPhase.Moved))
+            {
+                Vector2 endPos1 = touch1.position;
+                Vector2 endPos2 = touch2.position;
+                 
+                bool? sameDirection = Utils.AreFingersMovingInSameDirection(startPos1, endPos1, startPos2, endPos2);
+                isSameDirection = sameDirection;
+                if (sameDirection == null || sameDirection == false)
+                {
+                    previousPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position); 
+                    startPos1 = touch1.position;  
+                    startPos2 = touch2.position;
+                   // Debug.Log("TAG STOP ROTATE");
+                    return;
+                }  
+               // Debug.Log("TAG ROTATE"); 
+                Utils.setRotate(true);
+                Vector3 newPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
+                Vector3 direction = previousPosition - newPosition;
+                float distance = Vector3.Distance(newPosition, previousPosition);
+                if (distance > 0.01)
+                {
+                    // print("TAG distance:" + distance);
+                    float rotationAroundYAxis = direction.x * 180;  // camera moves horizontally
+                    float rotationAroundXAxis = -direction.y * 180; // camera moves vertically
+
+                    Utils.quaternion.x += rotationAroundXAxis * 0.9f;
+                    Utils.quaternion.y += rotationAroundYAxis * 0.9f;
+                    Utils.quaternion.x = Mathf.Clamp(Utils.quaternion.x, min, max);
+                    Utils.quaternion.y = Mathf.Clamp(Utils.quaternion.y, min, max);
+                    target.transform.localRotation = Quaternion.Euler(Utils.quaternion.x, Utils.quaternion.y, Utils.quaternion.z);
+                    previousPosition = newPosition;
+
+                }
+            }
+
         }
         else
         {
             Utils.setRotate(false);
         }
+
         if (Input.touchCount == 0)
         {
             Utils.setTwoTouch(false);
