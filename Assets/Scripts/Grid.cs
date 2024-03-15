@@ -10,6 +10,7 @@ public class Grid : MonoBehaviour
     [SerializeField] public List<GameObject> lHoldSet;
     [SerializeField] public Camera camera;
     [SerializeField] public GameObject wallObject;
+    [SerializeField] public GameObject centerPoint;
      
     public List<GameObject> lObject = new List<GameObject>();
     float currentRotationAroundYAxis; 
@@ -19,10 +20,10 @@ public class Grid : MonoBehaviour
     private void Start()
     {
         Utils.setFieldOfView(camera.fieldOfView);
-        /*return;*/
+        return;
         string json = Resources.Load<TextAsset>("data").text;
-        RecieveData(json);      
-    }
+        RecieveData(json);       
+    } 
 
     public void RecieveData(string data)
     { 
@@ -57,7 +58,9 @@ public class Grid : MonoBehaviour
         }
         height = gridData.Data.Height;
         transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
-        camera.transform.position = setPositionCamera(gridData.Data.Height); 
+        Bounds cameraBounds = new Bounds(camera.transform.position, Vector3.zero);
+        camera.transform.position = new Vector3(cameraBounds.center.x,cameraBounds.center.y,camera.transform.position.z);
+        //setPositionCamera(gridData.Data.Height);
         Utils.setDefaultPositionCamera(setPositionCamera(gridData.Data.Height));
     }
     private float getRotation(int rotation)
@@ -164,12 +167,15 @@ public class Grid : MonoBehaviour
         camera.fieldOfView = Utils.fieldOfView;
         Utils.setRorationAroundXY(0,0);  
         Vector3 move = new Vector3(Utils.x,Utils.y, Utils.z);
-        camera.transform.position = move;  
+        camera.transform.position = move;
         Vector3 moveGrid = new Vector3(5.63f,getDefaultPositionBox(height), 0);
         wallObject.transform.position = moveGrid;
         wallObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         wallObject.transform.localScale = refreshScale;
         refreshScale = new Vector3(0, 0, 0);
+        Bounds cameraBounds = new Bounds(Camera.main.transform.position, Vector3.zero);
+        wallObject.transform.position = new Vector3(cameraBounds.center.x, cameraBounds.center.y, wallObject.transform.position.z);
+        centerPoint.transform.position = new Vector3(cameraBounds.center.x, cameraBounds.center.y, centerPoint.transform.position.z);
         Utils.resetQuaternion();
     }
 

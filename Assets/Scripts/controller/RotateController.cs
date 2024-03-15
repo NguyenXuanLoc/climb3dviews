@@ -13,6 +13,7 @@ public class RotateController : MonoBehaviour
     [SerializeField] private Transform target;
     [SerializeField] private float distanceToTarget = 10;
     [SerializeField] public GameObject Eatch;
+    [SerializeField] public Transform point;
     [SerializeField] private RotateGestureRecognizer rotateGesture;
 
     float max = 89;
@@ -80,8 +81,8 @@ public class RotateController : MonoBehaviour
                     startPos2 = touch2.position;
                    // Debug.Log("TAG STOP ROTATE");
                     return;
-                }  
-               // Debug.Log("TAG ROTATE"); 
+                }
+               // Debug.Log("TAG ROTATE");
                 Utils.setRotate(true);
                 Vector3 newPosition = cam.ScreenToViewportPoint(Input.GetTouch(0).position);
                 Vector3 direction = previousPosition - newPosition;
@@ -95,11 +96,25 @@ public class RotateController : MonoBehaviour
                     Utils.quaternion.x += rotationAroundXAxis * 0.9f;
                     Utils.quaternion.y += rotationAroundYAxis * 0.9f;
                     Utils.quaternion.x = Mathf.Clamp(Utils.quaternion.x, min, max);
-                    Utils.quaternion.y = Mathf.Clamp(Utils.quaternion.y, min, max);
+                    Utils.quaternion.y = Mathf.Clamp(Utils.quaternion.y, min, max); 
+                    // Step 1: Translate the game object's position to the origin
+                    Vector3 objectPosition = target.transform.position;
+                    Vector3 difference = objectPosition - point.position;
+                     
+                    // Step 2: Rotate the game object
+                    Quaternion rotation = Quaternion.Euler(Utils.quaternion.x == 89 || Utils.quaternion.x == -89 ? 0: rotationAroundXAxis * 0.9f, 
+                                                           Utils.quaternion.y == 89 || Utils.quaternion.y == -89 ? 0 : rotationAroundYAxis * 0.9f, 0);
+                    difference = rotation * difference; 
+                    // Debug.Log("TAG POINT: " + point.position.z +" ___ WALL: "+target.transform.position.z);
+                    // Step 3: Translate the game object's position back to its original position
+                    target.transform.position = point.position + difference;
+
+                    point.position = new Vector3(point.position.x, point.position.y, target.transform.position.z - 3);
+                    cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, -47/*cam.transform.position.z*/ + point.position.z);
                     target.transform.localRotation = Quaternion.Euler(Utils.quaternion.x, Utils.quaternion.y, Utils.quaternion.z);
                     previousPosition = newPosition;
 
-                }
+                } 
             }
 
         }
