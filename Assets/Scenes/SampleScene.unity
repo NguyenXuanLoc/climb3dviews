@@ -476,6 +476,7 @@ GameObject:
   - component: {fileID: 597492356}
   - component: {fileID: 597492358}
   - component: {fileID: 597492359}
+  - component: {fileID: 597492360}
   m_Layer: 0
   m_Name: Wall
   m_TagString: Untagged
@@ -527,6 +528,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationTag: DropArea
   camera: {fileID: 963194227}
+  wall: {fileID: 597492352}
+  point: {fileID: 1993302945}
 --- !u!114 &597492355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,6 +622,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b0268acb8c67a34b92e3434f7cd3946, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &597492360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 597492351}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbf7efef691ed0c42930a0cb72347541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  center: {fileID: 0}
+  degreesPerSecond: 20
+  minAngle: -90
+  maxAngle: 90
 --- !u!1 &717704509
 GameObject:
   m_ObjectHideFlags: 0
@@ -875,6 +894,7 @@ MonoBehaviour:
   distanceToTarget: 10
   Eatch: {fileID: 597492351}
   point: {fileID: 1993302945}
+  rotationSpeed: 50
 --- !u!114 &963194232
 MonoBehaviour:
   m_ObjectHideFlags: 0

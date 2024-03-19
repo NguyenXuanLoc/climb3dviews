@@ -135,6 +135,7 @@
     <Compile Include="Assets\TriLib\TriLibSamples\LoadModelFromStream\Mappers\TextureMapperSample.cs" />
     <Compile Include="Assets\TriLib\TriLibStandaloneFileBrowser\StandaloneFileBrowser\StandaloneFileBrowserLinux.cs" />
     <Compile Include="Assets\TriLib\TriLibSamples\AssetViewer\Scripts\RuntimeProcessUtils.cs" />
+    <Compile Include="Assets\Scripts\controller\Test_rotation_controller.cs" />
     <Compile Include="Assets\TriLib\TriLibSamples\Common\Scripts\PasteManager.cs" />
     <Compile Include="Assets\TriLib\TriLibCore\Scripts\Mappers\ByNameAnimatorOverrideAnimationClipMapper.cs" />
     <Compile Include="Assets\OBJImport\OBJLoaderHelper.cs" />

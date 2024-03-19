@@ -109,9 +109,9 @@ public class RotateController : MonoBehaviour
                     // Step 3: Translate the game object's position back to its original position
                     target.transform.position = point.position + difference;
 
-                    point.position = new Vector3(point.position.x, point.position.y, target.transform.position.z - 3);
-                    cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, -47/*cam.transform.position.z*/ + point.position.z);
-                    target.transform.localRotation = Quaternion.Euler(Utils.quaternion.x, Utils.quaternion.y, Utils.quaternion.z);
+                 /*   point.position = new Vector3(point.position.x, point.position.y, target.transform.position.z - 3);
+                    cam.transform.position = new Vector3(cam.transform.position.x, cam.transform.position.y, -47*//*cam.transform.position.z*//* + point.position.z);
+                */    target.transform.localRotation = Quaternion.Euler(Utils.quaternion.x, Utils.quaternion.y, Utils.quaternion.z);
                     previousPosition = newPosition;
 
                 } 

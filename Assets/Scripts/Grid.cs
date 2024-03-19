@@ -24,9 +24,9 @@ public class Grid : MonoBehaviour
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);       
     } 
-
+     
     public void RecieveData(string data)
-    { 
+    {
         Box.setRoute(data); 
         string json = data;  
         GridData gridData = Newtonsoft.Json.JsonConvert.DeserializeObject<GridData>(json); 
@@ -59,6 +59,7 @@ public class Grid : MonoBehaviour
         height = gridData.Data.Height;
         transform.Rotate(new Vector3(1, 0, 0), setRotateX(gridData.Data.Height));
         Bounds cameraBounds = new Bounds(camera.transform.position, Vector3.zero);
+       // transform.position = new Vector3(cameraBounds.center.x, cameraBounds.center.y, transform.position.z);
         camera.transform.position = new Vector3(cameraBounds.center.x,cameraBounds.center.y,camera.transform.position.z);
         //setPositionCamera(gridData.Data.Height);
         Utils.setDefaultPositionCamera(setPositionCamera(gridData.Data.Height));
@@ -168,13 +169,13 @@ public class Grid : MonoBehaviour
         Utils.setRorationAroundXY(0,0);  
         Vector3 move = new Vector3(Utils.x,Utils.y, Utils.z);
         camera.transform.position = move;
-        Vector3 moveGrid = new Vector3(5.63f,getDefaultPositionBox(height), 0);
-        wallObject.transform.position = moveGrid;
+      /*  Vector3 moveGrid = new Vector3(5.63f,getDefaultPositionBox(height), 0);
+        wallObject.transform.position = moveGrid;*/
         wallObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
         wallObject.transform.localScale = refreshScale;
         refreshScale = new Vector3(0, 0, 0);
         Bounds cameraBounds = new Bounds(Camera.main.transform.position, Vector3.zero);
-        wallObject.transform.position = new Vector3(cameraBounds.center.x, cameraBounds.center.y, wallObject.transform.position.z);
+        wallObject.transform.position = new Vector3(cameraBounds.center.x, cameraBounds.center.y, 0);
         centerPoint.transform.position = new Vector3(cameraBounds.center.x, cameraBounds.center.y, centerPoint.transform.position.z);
         Utils.resetQuaternion();
     }
