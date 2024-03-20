@@ -46,9 +46,12 @@ public class Box : MonoBehaviour
         grid.transform.Translate(new Vector3(0, -height*2, 0));
         transform.position = new Vector3(5.48f, -0.9f, -1.3f);
         addGameObject(box);
-        addGameObject(roof); 
-    } 
-    
+        addGameObject(roof);
+        Bounds cameraBounds = new Bounds(Camera.main.transform.position, Vector3.zero);
+        wall.transform.position = new Vector3(cameraBounds.center.x, cameraBounds.center.y, wall.transform.position.z);
+
+    }
+
     void addGameObject(GameObject gameObj) 
     { 
         var gameOb = Instantiate(gameObj, new Vector3(),Quaternion.identity);
@@ -61,7 +64,7 @@ public class Box : MonoBehaviour
         lObject.Add(gameOb);
     }
     public static void DestroyView()
-    { 
+    {
         print("TAG DestroyView BOX");
         height = 0;
         isExistBox = false;
@@ -112,7 +115,7 @@ public class Box : MonoBehaviour
             default: return 0.5f; 
         }
     }
-    float setPositionY(long height) 
+    float setPositionY(long height)
     {
         switch (height)
         {   
