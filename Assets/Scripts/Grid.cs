@@ -23,7 +23,7 @@ public class Grid : MonoBehaviour
         return;
         string json = Resources.Load<TextAsset>("data").text;
         RecieveData(json);       
-    } 
+    }
      
     public void RecieveData(string data)
     {

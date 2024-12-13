@@ -528,8 +528,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destinationTag: DropArea
   camera: {fileID: 963194227}
-  wall: {fileID: 597492352}
-  point: {fileID: 1993302945}
 --- !u!114 &597492355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -884,7 +882,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93454c55a2a78174381890c68b5c5ef9, type: 3}
   m_Name: 
@@ -894,7 +892,6 @@ MonoBehaviour:
   distanceToTarget: 10
   Eatch: {fileID: 597492351}
   point: {fileID: 1993302945}
-  rotationSpeed: 50
 --- !u!114 &963194232
 MonoBehaviour:
   m_ObjectHideFlags: 0
